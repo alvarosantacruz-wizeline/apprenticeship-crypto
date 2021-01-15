@@ -16,6 +16,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BASE_BITSO_URL", "\"https://api.bitso.com/v3/\""
+
     }
 
     buildTypes {
@@ -44,6 +47,13 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+//    Gson
+    implementation "com.google.code.gson:gson:$gson_version"
+
+//    Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_gson_version"
 
 //    Test
     testImplementation 'junit:junit:4.13.1'

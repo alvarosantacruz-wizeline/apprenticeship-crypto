@@ -1,7 +1,7 @@
 package com.github.alvarosct02.criptocurrency
 
 import android.app.Application
-import com.github.alvarosct02.criptocurrency.data.source.CurrenciesRepository
+import com.github.alvarosct02.criptocurrency.data.repository.CurrenciesRepository
 
 class App(): Application() {
 
