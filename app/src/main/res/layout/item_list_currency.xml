@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="book"
+            type="com.github.alvarosct02.criptocurrency.data.models.Book" />
+
+        <variable
+            name="viewModel"
+            type="com.github.alvarosct02.criptocurrency.features.currencyList.CurrencyListViewModel" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        app:contentPadding="16dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@{book.book}"
+            tools:text="BTC_USD"
+            android:layout_height="wrap_content"/>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

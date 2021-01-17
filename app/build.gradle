@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
     id "androidx.navigation.safeargs.kotlin"
 }
 
@@ -19,6 +20,10 @@ android {
 
         buildConfigField "String", "BASE_BITSO_URL", "\"https://api.bitso.com/v3/\""
 
+    }
+
+    buildFeatures {
+        dataBinding true
     }
 
     buildTypes {
@@ -43,6 +48,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+//    ViewModel + LiveData
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"

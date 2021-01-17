@@ -17,6 +17,11 @@
     <fragment
         android:id="@+id/currency_detail_fragment"
         android:name="com.github.alvarosct02.criptocurrency.features.currencyDetail.CurrencyDetailFragment"
-        tools:layout="@layout/fragment_currency_detail"/>
+        tools:layout="@layout/fragment_currency_detail">
+        <argument
+            android:name="bookId"
+            android:defaultValue="bit-mxn"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
