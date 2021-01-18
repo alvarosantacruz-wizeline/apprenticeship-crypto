@@ -62,6 +62,7 @@ dependencies {
 //    Networking
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_gson_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
 //    Test
     testImplementation 'junit:junit:4.13.1'
