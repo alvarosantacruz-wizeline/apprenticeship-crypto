@@ -43,10 +43,10 @@ class CurrencyListAdapter(
 
 class BookDiffCallback : DiffUtil.ItemCallback<Book>() {
     override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
-        return oldItem.book == newItem.book
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
-        return oldItem == newItem
+        return oldItem.book == newItem.book
     }
 }

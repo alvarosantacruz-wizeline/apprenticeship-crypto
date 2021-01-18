@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.alvarosct02.criptocurrency.BuildConfig
+import com.github.alvarosct02.criptocurrency.Event
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.BitsoWrapper
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.CurrenciesService
@@ -16,16 +17,21 @@ import retrofit2.create
 class CurrencyListViewModel : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
-    private val _currencyList = MutableLiveData<List<Book>>()
-
-    val items: LiveData<List<Book>> = _currencyList
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getAvailableBooks() {
+    private val _currencyList = MutableLiveData<List<Book>>()
+    val items: LiveData<List<Book>> = _currencyList
 
-        //    TODO: Pending Refactor with ServiceLocator
-        val currencyService = RetrofitApiClient(BuildConfig.BASE_BITSO_URL).getRetrofitClient()
-            .create<CurrenciesService>()
+    private val _openBookEvent = MutableLiveData<Event<Book>>()
+    val openBookEvent: LiveData<Event<Book>> = _openBookEvent
+
+
+    //    TODO: Pending Refactor with ServiceLocator/DI
+    private val currencyService = RetrofitApiClient(BuildConfig.BASE_BITSO_URL).getRetrofitClient()
+        .create<CurrenciesService>()
+
+
+    fun getAvailableBooks() {
 
         _isLoading.value = true
 
@@ -45,5 +51,9 @@ class CurrencyListViewModel : ViewModel() {
             }
 
         })
+    }
+
+    fun onBookSelected(book: Book) {
+        _openBookEvent.value = Event(book)
     }
 }

@@ -1,18 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Currency Detail"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewModel"
+            type="com.github.alvarosct02.criptocurrency.features.currencyDetail.CurrencyDetailViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="@dimen/size_xlarge"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/size_large"
+                android:layout_marginTop="@dimen/size_large"
+                app:cryptoIcon="@{viewModel.ticker.book}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_btc" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_default"
+                android:layout_marginEnd="@dimen/size_default"
+                android:text="@{viewModel.ticker.book}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="?colorOnBackground"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon"
+                app:layout_constraintTop_toTopOf="@id/icon"
+                tools:text="BTC / USD" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.ticker.avgPrice}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="?colorOnBackground"
+                android:alpha="0.8"
+                app:layout_constraintEnd_toEndOf="@id/tv_name"
+                app:layout_constraintStart_toStartOf="@id/tv_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                tools:text="36 000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_large"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/tv_price">
+
+                <TextView
+                    android:id="@+id/label_asks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_default"
+                    android:text="Latest Asks"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="?colorOnBackground"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_asks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:items="@{viewModel.orders.asks.subList(0,5)}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/size_large" />
+
+                <TextView
+                    android:id="@+id/label_bids"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_default"
+                    android:text="Latest Bids"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="?colorOnBackground"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_bids"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:items="@{viewModel.orders.bids.subList(0,5)}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/size_large" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>
