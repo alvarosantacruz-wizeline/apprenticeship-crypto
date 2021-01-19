@@ -3,16 +3,12 @@ package com.github.alvarosct02.criptocurrency.features.currencyList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.alvarosct02.criptocurrency.BuildConfig
+import androidx.lifecycle.viewModelScope
 import com.github.alvarosct02.criptocurrency.Event
+import com.github.alvarosct02.criptocurrency.ServiceLocator
 import com.github.alvarosct02.criptocurrency.data.models.Book
-import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.BitsoWrapper
-import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.CurrenciesService
-import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.RetrofitApiClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.create
+import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteDataSource
+import kotlinx.coroutines.launch
 
 class CurrencyListViewModel : ViewModel() {
 
@@ -26,31 +22,21 @@ class CurrencyListViewModel : ViewModel() {
     val openBookEvent: LiveData<Event<Book>> = _openBookEvent
 
 
-    //    TODO: Pending Refactor with ServiceLocator/DI
-    private val currencyService = RetrofitApiClient(BuildConfig.BASE_BITSO_URL).getRetrofitClient()
-        .create<CurrenciesService>()
+    //    TODO: Pending Refactor with DI
+    private val currenciesRepository = ServiceLocator.currenciesRepository!!
 
 
-    fun getAvailableBooks() {
+    fun getAvailableBooks() = viewModelScope.launch {
 
         _isLoading.value = true
 
-        //    TODO: Pending Refactor with Coroutines
-        currencyService.listAvailableBooks().enqueue(object : Callback<BitsoWrapper<List<Book>>> {
-            override fun onResponse(
-                call: Call<BitsoWrapper<List<Book>>>,
-                response: Response<BitsoWrapper<List<Book>>>
-            ) {
-                _currencyList.value = response.body()?.payload
-                _isLoading.value = false
-            }
-
-            override fun onFailure(call: Call<BitsoWrapper<List<Book>>>, t: Throwable) {
-                t.printStackTrace()
-                _isLoading.value = false
-            }
-
-        })
+        try {
+            _currencyList.value = currenciesRepository.getAllBooks()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            _isLoading.value = false
+        }
     }
 
     fun onBookSelected(book: Book) {
