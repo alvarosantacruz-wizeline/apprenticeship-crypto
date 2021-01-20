@@ -1,5 +1,6 @@
 package com.github.alvarosct02.criptocurrency.data.source.local.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -14,6 +15,9 @@ interface BookEntityDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(entityList: List<BookEntity>)
+
+    @Query("SELECT * FROM BookEntity")
+    fun observeAll(): LiveData<List<BookEntity>>
 
     @Query("SELECT * FROM BookEntity")
     suspend fun getAll(): List<BookEntity>

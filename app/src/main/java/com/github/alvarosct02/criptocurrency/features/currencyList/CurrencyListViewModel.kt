@@ -7,10 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.github.alvarosct02.criptocurrency.Event
 import com.github.alvarosct02.criptocurrency.ServiceLocator
 import com.github.alvarosct02.criptocurrency.data.models.Book
-import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteDataSource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CurrencyListViewModel : ViewModel() {
+
+    //    TODO: Pending Refactor with DI
+    private val currenciesRepository = ServiceLocator.currenciesRepository!!
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -22,24 +25,18 @@ class CurrencyListViewModel : ViewModel() {
     val openBookEvent: LiveData<Event<Book>> = _openBookEvent
 
 
-    //    TODO: Pending Refactor with DI
-    private val currenciesRepository = ServiceLocator.currenciesRepository!!
-
-
-    fun getAvailableBooks() = viewModelScope.launch {
-
-        _isLoading.value = true
+    fun getAvailableBooks() = viewModelScope.launch(Dispatchers.IO) {
 
         try {
-            _currencyList.value = currenciesRepository.getAllBooks()
+            _currencyList.postValue(currenciesRepository.getAllBooks())
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            _isLoading.value = false
+            _isLoading.postValue(false)
         }
     }
 
     fun onBookSelected(book: Book) {
-        _openBookEvent.value = Event(book)
+        _openBookEvent.postValue(Event(book))
     }
 }

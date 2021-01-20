@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.alvarosct02.criptocurrency.App
 import com.github.alvarosct02.criptocurrency.ServiceLocator
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
-import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteDataSource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CurrencyDetailViewModel : ViewModel() {
@@ -28,29 +27,35 @@ class CurrencyDetailViewModel : ViewModel() {
     private val currenciesRepository = ServiceLocator.currenciesRepository!!
 
 
-    fun getBookTicker(book: String) = viewModelScope.launch {
+    fun getBookTicker(book: String) = viewModelScope.launch(Dispatchers.IO) {
 
-        _isLoading.value = true
+        _isLoading.postValue(true)
 
         try {
-            _ticker.value = currenciesRepository.getTickerByBook(book)
+            _ticker.postValue(currenciesRepository.getTickerByBook(book))
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            _isLoading.value = false
+            _isLoading.postValue(false)
         }
     }
 
-    fun getBookOrders(book: String) = viewModelScope.launch {
+    fun getBookOrders(book: String) = viewModelScope.launch(Dispatchers.IO) {
 
-        _isLoading.value = true
+        _isLoading.postValue(true)
 
         try {
-            _orders.value = currenciesRepository.getOrdersByBook(book)
+            _orders.postValue(currenciesRepository.getOrdersByBook(book))
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            _isLoading.value = false
+            _isLoading.postValue(false)
         }
     }
+}
+
+sealed class CurrencyDetailState(
+
+) {
+
 }

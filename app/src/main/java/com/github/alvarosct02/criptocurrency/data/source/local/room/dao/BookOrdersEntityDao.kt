@@ -1,5 +1,6 @@
 package com.github.alvarosct02.criptocurrency.data.source.local.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,7 +14,10 @@ interface BookOrdersEntityDao {
     suspend fun insert(entity: BookOrdersEntity)
 
     @Query("SELECT * FROM BookOrdersEntity WHERE book = :book")
-    suspend fun getById(book: String): BookOrdersEntity
+    fun observeById(book: String): LiveData<BookOrdersEntity>
+
+    @Query("SELECT * FROM BookOrdersEntity WHERE book = :book")
+    fun getById(book: String): BookOrdersEntity
 
     @Query("DELETE FROM BookOrdersEntity")
     suspend fun deleteAll()

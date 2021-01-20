@@ -2,8 +2,9 @@ package com.github.alvarosct02.criptocurrency
 
 import android.content.Context
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
-import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalDataSource
-import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteDataSource
+import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesRoomSource
+import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteSource
+import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRetrofitSource
 
 object ServiceLocator {
 
@@ -18,8 +19,8 @@ object ServiceLocator {
 
     private fun createCurrenciesRepository(context: Context): CurrenciesRepository {
         val newRepo = CurrenciesRepository(
-            remote = CurrenciesRemoteDataSource(),
-            local = CurrenciesLocalDataSource(context),
+            api = CurrenciesRetrofitSource(),
+            local = CurrenciesRoomSource(context),
         )
         currenciesRepository = newRepo
         return newRepo
