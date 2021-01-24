@@ -29,7 +29,7 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/size_large"
                 android:layout_marginTop="@dimen/size_large"
-                app:cryptoIcon="@{viewModel.ticker.book}"
+                app:cryptoIcon="@{viewModel.ticker.data.book}"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_default"
                 android:layout_marginEnd="@dimen/size_default"
-                android:text="@{viewModel.ticker.book}"
+                android:text="@{viewModel.ticker.data.book}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="?colorOnBackground"
                 android:textStyle="bold"
@@ -55,7 +55,7 @@
                 android:id="@+id/tv_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.ticker.avgPrice}"
+                android:text="@{viewModel.ticker.data.avgPrice}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="?colorOnBackground"
                 android:alpha="0.8"
@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_default"
-                    android:text="Latest Asks"
+                    android:text="@string/label_latest_asks"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="?colorOnBackground"
                     android:textStyle="bold" />
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    app:items="@{viewModel.orders.asks.subList(0,5)}"
+                    app:items="@{viewModel.orders.data.asks.subList(0,5)}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <Space
@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_default"
-                    android:text="Latest Bids"
+                    android:text="@string/label_latest_bids"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="?colorOnBackground"
                     android:textStyle="bold" />
@@ -108,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    app:items="@{viewModel.orders.bids.subList(0,5)}"
+                    app:items="@{viewModel.orders.data.bids.subList(0,5)}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <Space

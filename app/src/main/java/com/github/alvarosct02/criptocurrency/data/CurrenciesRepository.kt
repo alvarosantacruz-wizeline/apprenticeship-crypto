@@ -24,34 +24,34 @@ class CurrenciesRepository(
         return local.observeOrdersByBook(book)
     }
 
-    suspend fun getAllBooks(): List<Book> {
+    suspend fun getAllBooks(): Resource<List<Book>> {
         try {
             val response = api.getAllBooks()
             local.saveAllBooks(response)
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return local.getAllBooks()
+        return Resource.success(local.getAllBooks())
     }
 
-    suspend fun getTickerByBook(book: String): Ticker {
+    suspend fun getTickerByBook(book: String): Resource<Ticker> {
         try {
             val response = api.getTickerByBook(book)
             local.saveBookTicker(response)
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return local.getTickerByBook(book)
+        return Resource.success(local.getTickerByBook(book))
     }
 
-    suspend fun getOrdersByBook(book: String): BookOrders {
+    suspend fun getOrdersByBook(book: String): Resource<BookOrders> {
         try {
             val response = api.getOrdersByBook(book)
             local.saveBookOrders(response.copy(book = book))
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return local.getOrdersByBook(book)
+        return Resource.success(local.getOrdersByBook(book))
     }
 
 }

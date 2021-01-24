@@ -32,7 +32,7 @@
                 android:id="@+id/label_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Price: "
+                android:text="@string/label_price"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +60,7 @@
                 android:id="@+id/label_amount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Amount: "
+                android:text="@string/label_amount"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/gl_half"
                 app:layout_constraintTop_toTopOf="parent" />
