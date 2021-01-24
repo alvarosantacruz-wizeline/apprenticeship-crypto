@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.alvarosct02.criptocurrency.EventObserver
 import com.github.alvarosct02.criptocurrency.R
 import com.github.alvarosct02.criptocurrency.VerticalSpaceItemDecoration
-import com.github.alvarosct02.criptocurrency.databinding.FragmentCurrencyDetailBinding
 import com.github.alvarosct02.criptocurrency.databinding.FragmentCurrencyListBinding
 import com.github.alvarosct02.criptocurrency.features.base.BaseFragment
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class CurrencyListFragment : BaseFragment() {
-    private val viewModel by viewModels<CurrencyListViewModel>()
+    private val viewModel: CurrencyListViewModel by viewModel()
     private lateinit var binding: FragmentCurrencyListBinding
 
     override fun onCreateView(
@@ -43,7 +42,7 @@ class CurrencyListFragment : BaseFragment() {
         })
     }
 
-    private fun openBookEvent(bookId: String){
+    private fun openBookEvent(bookId: String) {
         val navDirections =
             CurrencyListFragmentDirections.actionCurrencyListFragmentToCurrencyDetailFragment(bookId)
         findNavController().navigate(navDirections)

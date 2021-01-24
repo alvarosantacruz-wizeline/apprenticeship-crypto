@@ -5,16 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.alvarosct02.criptocurrency.Event
-import com.github.alvarosct02.criptocurrency.ServiceLocator
+import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.Resource
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CurrencyListViewModel : ViewModel() {
-
-    //    TODO: Pending Refactor with DI
-    private val currenciesRepository = ServiceLocator.currenciesRepository!!
+class CurrencyListViewModel(
+    private val currenciesRepository: CurrenciesRepository
+) : ViewModel() {
 
     private val _currencyList = MutableLiveData<Resource<List<Book>>>()
     val items = _currencyList

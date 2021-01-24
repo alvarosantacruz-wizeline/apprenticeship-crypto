@@ -11,12 +11,14 @@ import com.github.alvarosct02.criptocurrency.VerticalSpaceItemDecoration
 import com.github.alvarosct02.criptocurrency.databinding.FragmentCurrencyDetailBinding
 import com.github.alvarosct02.criptocurrency.features.base.BaseFragment
 import com.github.alvarosct02.criptocurrency.features.currencyList.CurrencyListAdapter
+import com.github.alvarosct02.criptocurrency.features.currencyList.CurrencyListViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class CurrencyDetailFragment : BaseFragment() {
 
     private val args: CurrencyDetailFragmentArgs by navArgs()
-    private val viewModel by viewModels<CurrencyDetailViewModel>()
+    private val viewModel: CurrencyDetailViewModel by viewModel()
     private lateinit var binding: FragmentCurrencyDetailBinding
 
     override fun onCreateView(

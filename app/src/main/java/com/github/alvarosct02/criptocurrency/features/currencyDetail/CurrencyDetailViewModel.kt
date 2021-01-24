@@ -3,17 +3,16 @@ package com.github.alvarosct02.criptocurrency.features.currencyDetail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.alvarosct02.criptocurrency.ServiceLocator
+import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.Resource
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CurrencyDetailViewModel : ViewModel() {
-
-    //    TODO: Pending Refactor with DI
-    private val currenciesRepository = ServiceLocator.currenciesRepository!!
+class CurrencyDetailViewModel(
+    private val currenciesRepository: CurrenciesRepository
+) : ViewModel() {
 
     private val _ticker = MutableLiveData<Resource<Ticker>>()
     val ticker = _ticker
