@@ -9,18 +9,18 @@ abstract class NetworkBoundResource<ResultType, RequestType>() {
     private val result = MediatorLiveData<Resource<ResultType>>()
 
     fun get() {
-        result.value = Resource.loading(null)
+        result.value = Resource.Loading(null)
         val dbSource = loadFromDb()
 
         result.addSource(dbSource, object : Observer<ResultType> {
             var isFirst = true
             override fun onChanged(data: ResultType?) {
                 if (isFirst && shouldFetch(data)) {
-                    setValue(Resource.loading(data))
+                    setValue(Resource.Loading(data))
                     isFirst = false
                     fetchFromNetwork(dbSource)
                 } else {
-                    setValue(Resource.success(data))
+                    setValue(Resource.Success(data))
                     isFirst = false
                 }
             }

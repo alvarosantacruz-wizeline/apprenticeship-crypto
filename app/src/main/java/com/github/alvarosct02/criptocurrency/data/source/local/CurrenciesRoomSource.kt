@@ -1,6 +1,5 @@
 package com.github.alvarosct02.criptocurrency.data.source.local
 
-import android.content.Context
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.github.alvarosct02.criptocurrency.data.models.Book
@@ -11,13 +10,10 @@ import com.github.alvarosct02.criptocurrency.data.source.local.room.entities.Boo
 import com.github.alvarosct02.criptocurrency.data.source.local.room.entities.BookOrdersEntity
 import com.github.alvarosct02.criptocurrency.data.source.local.room.entities.TickerEntity
 
-class CurrenciesRoomSource(context: Context) : CurrenciesLocalSource {
+class CurrenciesRoomSource(
+    private val appDatabase: AppDatabase
+) : CurrenciesLocalSource {
 
-    //    TODO: Pending Refactor with DI
-    private val appDatabase: AppDatabase by lazy {
-        AppDatabase.init(context)
-        AppDatabase.getInstance()
-    }
 
     override fun observeAllBooks(): LiveData<List<Book>> {
         TODO("Not yet implemented")

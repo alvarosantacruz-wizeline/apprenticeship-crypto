@@ -9,19 +9,19 @@ interface CurrenciesLocalSource {
 
     fun observeAllBooks(): LiveData<List<Book>>
 
-    suspend fun getAllBooks(): List<Book>
+    suspend fun getAllBooks(): List<Book>?
 
     suspend fun saveAllBooks(books: List<Book>)
 
     fun observeTickerByBook(book: String): LiveData<Ticker>
 
-    suspend fun getTickerByBook(book: String): Ticker
+    suspend fun getTickerByBook(book: String): Ticker?
 
     suspend fun saveBookTicker(ticker: Ticker)
 
     fun observeOrdersByBook(book: String): LiveData<BookOrders>
 
-    suspend fun getOrdersByBook(book: String): BookOrders
+    suspend fun getOrdersByBook(book: String): BookOrders?
 
     suspend fun saveBookOrders(bookOrders: BookOrders)
 

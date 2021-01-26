@@ -5,29 +5,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.alvarosct02.criptocurrency.Event
-import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
+import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.Resource
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CurrencyListViewModel(
-    private val currenciesRepository: CurrenciesRepository
+    private val currenciesRepository: DefaultCurrenciesRepository
 ) : ViewModel() {
 
     private val _currencyList = MutableLiveData<Resource<List<Book>>>()
-    val items = _currencyList
+    val items: LiveData<Resource<List<Book>>> = _currencyList
 
     private val _openBookEvent = MutableLiveData<Event<Book>>()
     val openBookEvent: LiveData<Event<Book>> = _openBookEvent
 
 
-    fun getAvailableBooks() = viewModelScope.launch(Dispatchers.IO) {
-        _currencyList.postValue(Resource.loading(null))
+    fun getAvailableBooks() = viewModelScope.launch {
+        _currencyList.postValue(Resource.Loading(null))
         try {
             _currencyList.postValue(currenciesRepository.getAllBooks())
         } catch (e: Exception) {
-            _currencyList.postValue(Resource.error(e.message ?: "", data = null))
+            _currencyList.postValue(Resource.Error(e.message ?: "", data = null))
         }
     }
 

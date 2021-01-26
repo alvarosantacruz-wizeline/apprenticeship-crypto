@@ -6,15 +6,15 @@ import java.math.MathContext
 import java.math.RoundingMode
 
 data class Ticker(
-    @SerializedName("book") val book: String,
-    @SerializedName("volume") val volume: String,
-    @SerializedName("high") val high: String,
-    @SerializedName("last") val last: String,
-    @SerializedName("low") val low: String,
-    @SerializedName("vwap") val vwap: String,
-    @SerializedName("ask") val ask: String,
-    @SerializedName("bid") val bid: String,
-    @SerializedName("created_at") val createdAt: String,
+    @SerializedName("book") val book: String = "",
+    @SerializedName("volume") val volume: String = "",
+    @SerializedName("high") val high: String = "",
+    @SerializedName("last") val last: String = "",
+    @SerializedName("low") val low: String = "",
+    @SerializedName("vwap") val vwap: String = "",
+    @SerializedName("ask") val ask: String = "",
+    @SerializedName("bid") val bid: String = "",
+    @SerializedName("created_at") val createdAt: String = "",
 ) {
 
     val avgPrice: String
