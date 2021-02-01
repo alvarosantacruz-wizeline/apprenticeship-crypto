@@ -1,13 +1,13 @@
 package com.github.alvarosct02.criptocurrency.ui.currencyDetail
 
 import androidx.lifecycle.*
-import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
+import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.UIState
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 
 class CurrencyDetailViewModel(
-    private val currenciesRepository: DefaultCurrenciesRepository
+    private val currenciesRepository: CurrenciesRepository
 ) : ViewModel() {
 
     private val _bookId = MutableLiveData<String>()

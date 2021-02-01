@@ -2,6 +2,7 @@ package com.github.alvarosct02.criptocurrency.repository
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.github.alvarosct02.criptocurrency.data.ErrorType
 import com.github.alvarosct02.criptocurrency.data.Resource
@@ -17,55 +18,76 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     private var tickerMap: MutableMap<String, Ticker> = mutableMapOf()
     private var ordersMap: MutableMap<String, BookOrders> = mutableMapOf()
 
+    private var booksLiveData = MutableLiveData<Resource<List<Book>>>()
+    private var tickerLiveData = MutableLiveData<Resource<Ticker>>()
+    private var ordersLiveData = MutableLiveData<Resource<BookOrders>>()
+
+
+
     override fun observeAllBooks(): LiveData<Resource<List<Book>>> {
-        return liveData<Resource<List<Book>>>  {
-            emit(getAllBooks()?.let { Resource.Success(it) }
-                ?: Resource.Error(errorType = ErrorType.Unknown))
-        }
+        return booksLiveData
     }
 
     @WorkerThread
     override suspend fun getAllBooks(): List<Book>? {
-        return booksList
+        val result = booksList
+        booksLiveData.postValue(result?.let { Resource.Success(it) }
+            ?: Resource.Error(errorType = ErrorType.Unknown)
+        )
+        return result
     }
 
     @WorkerThread
     override suspend fun saveAllBooks(books: List<Book>) {
         this.booksList = books
+        val result = books
+        booksLiveData.postValue(result?.let { Resource.Success(it) }
+            ?: Resource.Error(errorType = ErrorType.Unknown)
+        )
     }
 
     override fun observeTickerByBook(book: String): LiveData<Resource<Ticker>> {
-        return liveData<Resource<Ticker>>  {
-            emit(getTickerByBook(book)?.let { Resource.Success(it) }
-                ?: Resource.Error(errorType = ErrorType.Unknown))
-        }
+        return tickerLiveData
     }
 
     @WorkerThread
     override suspend fun getTickerByBook(book: String): Ticker? {
-        return tickerMap[book]
+        val result = tickerMap[book]
+        tickerLiveData.postValue(result?.let { Resource.Success(it) }
+            ?: Resource.Error(errorType = ErrorType.Unknown)
+        )
+        return result
     }
 
     @WorkerThread
     override suspend fun saveBookTicker(ticker: Ticker) {
         this.tickerMap[ticker.book] = ticker
+        val result = ticker
+        tickerLiveData.postValue(result?.let { Resource.Success(it) }
+            ?: Resource.Error(errorType = ErrorType.Unknown)
+        )
     }
 
     override fun observeOrdersByBook(book: String): LiveData<Resource<BookOrders>> {
-        return liveData<Resource<BookOrders>> {
-            emit(getOrdersByBook(book)?.let { Resource.Success(it) }
-                ?: Resource.Error(errorType = ErrorType.Unknown))
-        }
+        return ordersLiveData
     }
 
     @WorkerThread
     override suspend fun getOrdersByBook(book: String): BookOrders? {
-        return ordersMap[book]
+        val result = ordersMap[book]
+        ordersLiveData.postValue(result?.let { Resource.Success(it) }
+            ?: Resource.Error(errorType = ErrorType.Unknown)
+        )
+        return result
     }
 
     @WorkerThread
     override suspend fun saveBookOrders(bookOrders: BookOrders) {
         this.ordersMap[bookOrders.book] = bookOrders
+        val result = bookOrders
+        ordersLiveData.postValue(result?.let { Resource.Success(it) }
+            ?: Resource.Error(errorType = ErrorType.Unknown)
+        )
     }
 
 }

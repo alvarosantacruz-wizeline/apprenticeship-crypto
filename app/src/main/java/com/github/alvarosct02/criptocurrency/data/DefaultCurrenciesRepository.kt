@@ -1,5 +1,6 @@
 package com.github.alvarosct02.criptocurrency.data
 
+import android.util.Log
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.liveData
 import com.github.alvarosct02.criptocurrency.data.models.Book
@@ -23,6 +24,8 @@ class DefaultCurrenciesRepository(
         try {
             refreshAllBooks()
         } catch (e: Exception) {
+            print("ASCT" + e.message ?: "")
+            e.printStackTrace()
             emit(Resource.Error(errorType = ErrorType.Unknown))
         }
     }

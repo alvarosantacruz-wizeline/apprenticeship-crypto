@@ -83,6 +83,11 @@ dependencies {
     testImplementation deps.mock_web_server
     testImplementation deps.arch_core.testing
     testImplementation deps.coroutines.test
+    testImplementation deps.truth
+
+    androidTestImplementation deps.espresso.core
+    androidTestImplementation deps.atsl.runner
+    androidTestImplementation deps.atsl.rules
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

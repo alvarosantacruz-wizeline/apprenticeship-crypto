@@ -2,15 +2,13 @@ package com.github.alvarosct02.criptocurrency.ui.currencyList
 
 import androidx.lifecycle.*
 import com.github.alvarosct02.criptocurrency.Event
-import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
-import com.github.alvarosct02.criptocurrency.data.Resource
+import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.UIState
 import com.github.alvarosct02.criptocurrency.data.models.Book
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CurrencyListViewModel(
-    private val currenciesRepository: DefaultCurrenciesRepository
+    private val currenciesRepository: CurrenciesRepository
 ) : ViewModel() {
 
     val items = Transformations.map(currenciesRepository.getAllBooks()) {

@@ -1,6 +1,6 @@
 package com.github.alvarosct02.criptocurrency.data
 
-class UIState<T>(
+data class UIState<T>(
     val data: T? = null,
     val errorMessage: String? = null,
     val isLoading: Boolean = false

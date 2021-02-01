@@ -8,6 +8,7 @@ import com.github.alvarosct02.criptocurrency.data.UIState
 import com.github.alvarosct02.criptocurrency.observeForTesting
 import com.github.alvarosct02.criptocurrency.repository.FakeCurrenciesLocalSource
 import com.github.alvarosct02.criptocurrency.repository.FakeCurrenciesRemoteSource
+import com.github.alvarosct02.criptocurrency.ui.currencyDetail.CurrencyDetailViewModel
 import com.github.alvarosct02.criptocurrency.ui.currencyList.CurrencyListViewModel
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,12 +19,12 @@ import org.junit.Test
 import org.mockito.Mockito.spy
 
 @ExperimentalCoroutinesApi
-class CurrencyListViewModelTest {
+class CurrencyDetailViewModelTest {
 
     private val local = spy(FakeCurrenciesLocalSource())
     private val remote = spy(FakeCurrenciesRemoteSource())
     private lateinit var repository: CurrenciesRepository
-    private lateinit var viewModel: CurrencyListViewModel
+    private lateinit var viewModel: CurrencyDetailViewModel
 
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
@@ -38,7 +39,7 @@ class CurrencyListViewModelTest {
             local = local,
             api = remote
         )
-        viewModel = CurrencyListViewModel(repository)
+        viewModel = CurrencyDetailViewModel(repository)
     }
 
     @After
@@ -47,13 +48,26 @@ class CurrencyListViewModelTest {
     }
 
     @Test
-    fun `items should return the elements from the api`() = testCoroutineRule.runBlockingTest {
+    fun `ticker should return the elements from the api`() = testCoroutineRule.runBlockingTest {
 
-        val subject = viewModel.items
+        viewModel.setBook("BTC-USD")
+        val subject = viewModel.ticker
         subject.observeForTesting {
             assertThat(subject.value?.isLoading).isTrue()
             advanceTimeBy(500)
-            assertThat(subject.value?.data).hasSize(25)
+            assertThat(subject.value?.data?.high).isEqualTo("670855.71")
+        }
+    }
+
+    @Test
+    fun `orders should return the elements from the api`() = testCoroutineRule.runBlockingTest {
+
+        viewModel.setBook("BTC-USD")
+        val subject = viewModel.orders
+        subject.observeForTesting {
+            assertThat(subject.value?.isLoading).isTrue()
+            advanceTimeBy(500)
+            assertThat(subject.value?.data?.asks?.size).isGreaterThan(5)
         }
     }
 

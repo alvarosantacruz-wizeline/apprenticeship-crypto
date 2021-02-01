@@ -23,6 +23,20 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 /**
+ * Observes a [LiveData] until the `block` is done executing.
+ */
+fun <T> LiveData<T>.observeForTesting(block: () -> Unit) {
+    val observer = Observer<T> { }
+    try {
+        observeForever(observer)
+        block()
+    } finally {
+        removeObserver(observer)
+    }
+}
+
+
+/**
  * Gets the value of a [LiveData] or waits for it to have one, with a timeout.
  *
  * Use this extension from host-side (JVM) tests. It's recommended to use it alongside
@@ -59,17 +73,4 @@ fun <T> LiveData<T>.getOrAwaitValue(
     }
     @Suppress("UNCHECKED_CAST")
     return data as T
-}
-
-/**
- * Observes a [LiveData] until the `block` is done executing.
- */
-fun <T> LiveData<T>.observeForTesting(block: () -> Unit) {
-    val observer = Observer<T> { }
-    try {
-        observeForever(observer)
-        block()
-    } finally {
-        removeObserver(observer)
-    }
 }
