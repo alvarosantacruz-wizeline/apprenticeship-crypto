@@ -14,7 +14,7 @@ interface BookOrdersEntityDao {
     suspend fun insert(entity: BookOrdersEntity)
 
     @Query("SELECT * FROM BookOrdersEntity WHERE book = :book")
-    fun observeById(book: String): LiveData<BookOrdersEntity>
+    fun observeById(book: String): LiveData<BookOrdersEntity?>
 
     @Query("SELECT * FROM BookOrdersEntity WHERE book = :book")
     fun getById(book: String): BookOrdersEntity

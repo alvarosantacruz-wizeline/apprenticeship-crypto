@@ -17,7 +17,7 @@ interface BookEntityDao {
     suspend fun insertAll(entityList: List<BookEntity>)
 
     @Query("SELECT * FROM BookEntity")
-    fun observeAll(): LiveData<List<BookEntity>>
+    fun observeAll(): LiveData<List<BookEntity?>>
 
     @Query("SELECT * FROM BookEntity")
     suspend fun getAll(): List<BookEntity>

@@ -8,8 +8,8 @@ import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemote
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRetrofitSource
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.CurrenciesService
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.RetrofitApiClient
-import com.github.alvarosct02.criptocurrency.features.currencyDetail.CurrencyDetailViewModel
-import com.github.alvarosct02.criptocurrency.features.currencyList.CurrencyListViewModel
+import com.github.alvarosct02.criptocurrency.ui.currencyDetail.CurrencyDetailViewModel
+import com.github.alvarosct02.criptocurrency.ui.currencyList.CurrencyListViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit

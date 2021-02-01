@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.github.alvarosct02.criptocurrency.features.currencyDetail.CurrencyDetailViewModel" />
+            type="com.github.alvarosct02.criptocurrency.ui.currencyDetail.CurrencyDetailViewModel" />
 
     </data>
 
@@ -19,106 +19,127 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="@dimen/size_xlarge"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/size_large"
-                android:layout_marginTop="@dimen/size_large"
-                app:cryptoIcon="@{viewModel.ticker.data.book}"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_btc" />
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_default"
-                android:layout_marginEnd="@dimen/size_default"
-                android:text="@{viewModel.ticker.data.book}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textColor="?colorOnBackground"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icon"
-                app:layout_constraintTop_toTopOf="@id/icon"
-                tools:text="BTC / USD" />
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.ticker.data.avgPrice}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="?colorOnBackground"
-                android:alpha="0.8"
-                app:layout_constraintEnd_toEndOf="@id/tv_name"
-                app:layout_constraintStart_toStartOf="@id/tv_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_name"
-                tools:text="36 000" />
-
-            <LinearLayout
+            <ProgressBar
+                android:id="@+id/pb_ticker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_large"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/tv_price">
+                android:padding="@dimen/size_large"
+                app:isVisible="@{viewModel.ticker.loading}"
+                tools:visibility="gone" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_large"
+                app:isVisible="@{!viewModel.ticker.loading}">
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="@dimen/size_xlarge"
+                    android:layout_height="0dp"
+                    app:cryptoIcon="@{viewModel.ticker.data.book}"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_btc" />
 
                 <TextView
-                    android:id="@+id/label_asks"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_name"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_default"
-                    android:text="@string/label_latest_asks"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:text="@{viewModel.ticker.data.book}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="?colorOnBackground"
-                    android:textStyle="bold" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_asks"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    app:items="@{viewModel.orders.data.asks.subList(0,5)}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/size_large" />
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon"
+                    app:layout_constraintTop_toTopOf="@id/icon"
+                    tools:text="BTC / USD" />
 
                 <TextView
-                    android:id="@+id/label_bids"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_default"
-                    android:text="@string/label_latest_bids"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textColor="?colorOnBackground"
-                    android:textStyle="bold" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_bids"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    app:items="@{viewModel.orders.data.bids.subList(0,5)}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-                <Space
+                    android:id="@+id/tv_price"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/size_large" />
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:text="@{viewModel.ticker.data.avgPrice}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="?colorOnBackground"
+                    app:layout_constraintEnd_toEndOf="@id/tv_name"
+                    app:layout_constraintStart_toStartOf="@id/tv_name"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name"
+                    tools:text="36 000" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/label_asks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_default"
+                android:text="@string/label_latest_asks"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="?colorOnBackground"
+                android:textStyle="bold" />
 
+            <ProgressBar
+                android:id="@+id/pb_asks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_large"
+                app:isVisible="@{viewModel.orders.loading}"
+                tools:visibility="gone" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_asks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:isVisible="@{!viewModel.orders.loading}"
+                app:items="@{viewModel.orders.data.asks.subList(0,5)}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_large" />
+
+            <TextView
+                android:id="@+id/label_bids"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_default"
+                android:text="@string/label_latest_bids"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="?colorOnBackground"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/pb_bids"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_large"
+                app:isVisible="@{viewModel.orders.loading}"
+                tools:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_bids"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:isVisible="@{!viewModel.orders.loading}"
+                app:items="@{viewModel.orders.data.bids.subList(0,5)}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_large" />
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 </layout>

@@ -1,17 +1,14 @@
-package com.github.alvarosct02.criptocurrency.features.currencyDetail
+package com.github.alvarosct02.criptocurrency.ui.currencyDetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.github.alvarosct02.criptocurrency.R
 import com.github.alvarosct02.criptocurrency.VerticalSpaceItemDecoration
 import com.github.alvarosct02.criptocurrency.databinding.FragmentCurrencyDetailBinding
-import com.github.alvarosct02.criptocurrency.features.base.BaseFragment
-import com.github.alvarosct02.criptocurrency.features.currencyList.CurrencyListAdapter
-import com.github.alvarosct02.criptocurrency.features.currencyList.CurrencyListViewModel
+import com.github.alvarosct02.criptocurrency.ui.base.BaseFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -39,8 +36,7 @@ class CurrencyDetailFragment : BaseFragment() {
         setupListAdapters()
 
         val bookId = args.bookId
-        viewModel.getBookOrders(bookId)
-        viewModel.getBookTicker(bookId)
+        viewModel.setBook(bookId)
     }
 
 

@@ -1,4 +1,4 @@
-package com.github.alvarosct02.criptocurrency.features.currencyList
+package com.github.alvarosct02.criptocurrency.ui.currencyList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -10,16 +10,16 @@ import org.jetbrains.annotations.TestOnly
 
 interface CurrenciesRepository {
 
-    fun observeAllBooks(): LiveData<List<Book>>
+    fun getAllBooks(): LiveData<Resource<List<Book>>>
 
-    fun observeTickerByBook(book: String): LiveData<Ticker>
+    fun getTickerByBook(book: String): LiveData<Resource<Ticker>>
 
-    fun observeOrdersByBook(book: String): LiveData<BookOrders>
+    fun getOrdersByBook(book: String): LiveData<Resource<BookOrders>>
 
-    suspend fun getAllBooks(): Resource<List<Book>>
+    suspend fun refreshAllBooks(): List<Book>
 
-    suspend fun getTickerByBook(book: String): Resource<Ticker>
+    suspend fun refreshTickerByBook(book: String): Ticker
 
-    suspend fun getOrdersByBook(book: String): Resource<BookOrders>
+    suspend fun refreshOrdersByBook(book: String): BookOrders
 
 }

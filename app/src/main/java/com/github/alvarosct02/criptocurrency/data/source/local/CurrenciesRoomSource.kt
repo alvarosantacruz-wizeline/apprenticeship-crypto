@@ -2,6 +2,9 @@ package com.github.alvarosct02.criptocurrency.data.source.local
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import com.github.alvarosct02.criptocurrency.data.ErrorType
+import com.github.alvarosct02.criptocurrency.data.Resource
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
@@ -15,8 +18,14 @@ class CurrenciesRoomSource(
 ) : CurrenciesLocalSource {
 
 
-    override fun observeAllBooks(): LiveData<List<Book>> {
-        TODO("Not yet implemented")
+    override fun observeAllBooks(): LiveData<Resource<List<Book>>> {
+        return Transformations.map(appDatabase.bookEntityDao().observeAll()) { result ->
+            if (result.isNullOrEmpty()) {
+                Resource.Error(errorType = ErrorType.Unknown)
+            } else {
+                Resource.Success(result.map { book -> BookEntity.toModel(book!!) })
+            }
+        }
     }
 
     @WorkerThread
@@ -32,8 +41,14 @@ class CurrenciesRoomSource(
         appDatabase.bookEntityDao().insertAll(bookEntityList)
     }
 
-    override fun observeTickerByBook(book: String): LiveData<Ticker> {
-        TODO("Not yet implemented")
+    override fun observeTickerByBook(book: String): LiveData<Resource<Ticker>> {
+        return Transformations.map(appDatabase.tickerEntityDao().observeById(book)) { result ->
+            if (result == null) {
+                Resource.Error(errorType = ErrorType.Unknown)
+            } else {
+                Resource.Success(TickerEntity.toModel(result))
+            }
+        }
     }
 
     @WorkerThread
@@ -47,8 +62,14 @@ class CurrenciesRoomSource(
         appDatabase.tickerEntityDao().insert(entity)
     }
 
-    override fun observeOrdersByBook(book: String): LiveData<BookOrders> {
-        TODO("Not yet implemented")
+    override fun observeOrdersByBook(book: String): LiveData<Resource<BookOrders>> {
+        return Transformations.map(appDatabase.bookOrdersEntityDao().observeById(book)) { result ->
+            if (result == null) {
+                Resource.Error(errorType = ErrorType.Unknown)
+            } else {
+                Resource.Success(BookOrdersEntity.toModel(result))
+            }
+        }
     }
 
     @WorkerThread

@@ -1,4 +1,4 @@
-package com.github.alvarosct02.criptocurrency.features.currencyList
+package com.github.alvarosct02.criptocurrency.ui.currencyList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.github.alvarosct02.criptocurrency.EventObserver
 import com.github.alvarosct02.criptocurrency.R
 import com.github.alvarosct02.criptocurrency.VerticalSpaceItemDecoration
 import com.github.alvarosct02.criptocurrency.databinding.FragmentCurrencyListBinding
-import com.github.alvarosct02.criptocurrency.features.base.BaseFragment
+import com.github.alvarosct02.criptocurrency.ui.base.BaseFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class CurrencyListFragment : BaseFragment() {
@@ -32,8 +32,6 @@ class CurrencyListFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         setupNavigation()
         setupListAdapter()
-
-        viewModel.getAvailableBooks()
     }
 
     private fun setupNavigation() {

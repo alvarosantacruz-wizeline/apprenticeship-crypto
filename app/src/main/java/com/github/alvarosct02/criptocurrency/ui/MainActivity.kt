@@ -1,4 +1,4 @@
-package com.github.alvarosct02.criptocurrency.features
+package com.github.alvarosct02.criptocurrency.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

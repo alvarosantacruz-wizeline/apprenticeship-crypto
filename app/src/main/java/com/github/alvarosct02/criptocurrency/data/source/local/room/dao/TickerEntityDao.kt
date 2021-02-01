@@ -14,7 +14,7 @@ interface TickerEntityDao {
     suspend fun insert(entity: TickerEntity)
 
     @Query("SELECT * FROM TickerEntity WHERE book = :book")
-    fun observeById(book: String): LiveData<TickerEntity>
+    fun observeById(book: String): LiveData<TickerEntity?>
 
     @Query("SELECT * FROM TickerEntity WHERE book = :book")
     fun getById(book: String): TickerEntity

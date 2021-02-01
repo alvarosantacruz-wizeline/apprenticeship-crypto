@@ -1,57 +1,70 @@
 package com.github.alvarosct02.criptocurrency.data
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.liveData
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSource
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteSource
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 
 class DefaultCurrenciesRepository(
     private val api: CurrenciesRemoteSource,
-    private val local: CurrenciesLocalSource,
+    private val local: CurrenciesLocalSource
 ) : CurrenciesRepository {
 
-    override fun observeAllBooks(): LiveData<List<Book>> {
-        return local.observeAllBooks()
-    }
-
-    override fun observeTickerByBook(book: String): LiveData<Ticker> {
-        return local.observeTickerByBook(book)
-    }
-
-    override fun observeOrdersByBook(book: String): LiveData<BookOrders> {
-        return local.observeOrdersByBook(book)
-    }
-
-    override suspend fun getAllBooks(): Resource<List<Book>> {
+    override fun getAllBooks() = liveData<Resource<List<Book>>> {
+        emit(Resource.Loading())
+        delay(500)
+        emitSource(local.observeAllBooks())
         try {
-            val response = api.getAllBooks()
-            local.saveAllBooks(response)
+            refreshAllBooks()
         } catch (e: Exception) {
-            e.printStackTrace()
+            emit(Resource.Error(errorType = ErrorType.Unknown))
         }
-        return Resource.Success(local.getAllBooks())
     }
 
-    override suspend fun getTickerByBook(book: String): Resource<Ticker> {
+    override fun getTickerByBook(book: String) = liveData<Resource<Ticker>> {
+        emit(Resource.Loading())
+        delay(200)
+        emitSource(local.observeTickerByBook(book))
         try {
-            val response = api.getTickerByBook(book)
-            local.saveBookTicker(response)
+            refreshTickerByBook(book)
         } catch (e: Exception) {
-            e.printStackTrace()
+            emit(Resource.Error(errorType = ErrorType.Unknown))
         }
-        return Resource.Success(local.getTickerByBook(book))
     }
 
-    override suspend fun getOrdersByBook(book: String): Resource<BookOrders> {
+    override fun getOrdersByBook(book: String) = liveData<Resource<BookOrders>> {
+        emit(Resource.Loading())
+        delay(200)
+        emitSource(local.observeOrdersByBook(book))
         try {
-            val response = api.getOrdersByBook(book)
-            local.saveBookOrders(response.copy(book = book))
+            refreshOrdersByBook(book)
         } catch (e: Exception) {
-            e.printStackTrace()
+            emit(Resource.Error(errorType = ErrorType.Unknown))
         }
-        return Resource.Success(local.getOrdersByBook(book))
+    }
+
+    override suspend fun refreshAllBooks(): List<Book> {
+        val books = api.getAllBooks()
+        local.saveAllBooks(books)
+        return books
+    }
+
+    override suspend fun refreshTickerByBook(book: String): Ticker {
+        val ticker = api.getTickerByBook(book)
+        local.saveBookTicker(ticker)
+        return ticker
+    }
+
+    override suspend fun refreshOrdersByBook(book: String): BookOrders {
+        val orders = api.getOrdersByBook(book)
+        local.saveBookOrders(orders.copy(book = book))
+        return orders
     }
 
 }
