@@ -1,10 +1,8 @@
-package com.github.alvarosct02.criptocurrency
+package com.github.alvarosct02.criptocurrency.shared
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
-import org.junit.After
-import org.junit.Before
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement

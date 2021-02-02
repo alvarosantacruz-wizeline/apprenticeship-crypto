@@ -1,4 +1,4 @@
-package com.github.alvarosct02.criptocurrency.repository
+package com.github.alvarosct02.criptocurrency.shared
 
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders

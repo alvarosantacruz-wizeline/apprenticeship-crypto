@@ -1,7 +1,6 @@
 package com.github.alvarosct02.criptocurrency.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.github.alvarosct02.criptocurrency.TestCoroutineRule
 import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
@@ -9,7 +8,9 @@ import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRetrofitSource
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.BitsoWrapper
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.CurrenciesService
-import com.github.alvarosct02.criptocurrency.observeForTesting
+import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesLocalSource
+import com.github.alvarosct02.criptocurrency.shared.TestCoroutineRule
+import com.github.alvarosct02.criptocurrency.shared.observeForTesting
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
@@ -69,7 +70,7 @@ class CurrencyRepositoryTest {
 
             verify(service, times(1)).listAvailableBooks()
             verify(local, never()).saveAllBooks(bookList)
-            verify(local, times(1)).getAllBooks()
+            verify(local, times(1)).observeAllBooks()
         }
 
     @Test
@@ -86,7 +87,7 @@ class CurrencyRepositoryTest {
 
             verify(service, times(1)).getBookDetail(bookId)
             verify(local, times(1)).saveBookTicker(ticker)
-            verify(local, times(1)).getTickerByBook(bookId)
+            verify(local, times(1)).observeTickerByBook(bookId)
         }
 
 
@@ -103,7 +104,7 @@ class CurrencyRepositoryTest {
 
             verify(service, times(1)).getBookDetail(bookId)
             verify(local, never()).saveBookTicker(ticker)
-            verify(local, times(1)).getTickerByBook(bookId)
+            verify(local, times(1)).observeTickerByBook(bookId)
         }
 
     @Test
@@ -120,7 +121,7 @@ class CurrencyRepositoryTest {
 
             verify(service, times(1)).getBookOrders(bookId)
             verify(local, times(1)).saveBookOrders(orders)
-            verify(local, times(1)).getOrdersByBook(bookId)
+            verify(local, times(1)).observeOrdersByBook(bookId)
         }
 
     @Test
@@ -136,6 +137,6 @@ class CurrencyRepositoryTest {
 
             verify(service, times(1)).getBookOrders(bookId)
             verify(local, never()).saveBookOrders(orders)
-            verify(local, times(1)).getOrdersByBook(bookId)
+            verify(local, times(1)).observeOrdersByBook(bookId)
         }
 }

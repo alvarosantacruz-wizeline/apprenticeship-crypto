@@ -4,17 +4,17 @@ import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSource
+import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesLocalSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.KoinTest
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class FakeCurrenciesLocalSourceTest : KoinTest {
+class FakeCurrenciesLocalSourceTest {
 
     companion object {
         const val BOOK_1_ID = "Book_1_Id"

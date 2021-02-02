@@ -1,9 +1,8 @@
-package com.github.alvarosct02.criptocurrency.repository
+package com.github.alvarosct02.criptocurrency.shared
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import com.github.alvarosct02.criptocurrency.data.ErrorType
 import com.github.alvarosct02.criptocurrency.data.Resource
 import com.github.alvarosct02.criptocurrency.data.models.Book

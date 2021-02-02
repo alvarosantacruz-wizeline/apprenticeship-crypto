@@ -9,6 +9,11 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
+
     defaultConfig {
         applicationId "com.github.alvarosct02.criptocurrency"
         minSdkVersion 21
@@ -16,11 +21,21 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.github.alvarosct02.criptocurrency.MyRunner"
 
         buildConfigField "String", "BASE_BITSO_URL", "\"https://api.bitso.com/v3/\""
         buildConfigField "String", "DATABASE_NAME", "\"criptocurreny.db\""
 
+    }
+
+    sourceSets {
+        String sharedTestDir = 'src/sharedTest/java'
+        test {
+            java.srcDirs += sharedTestDir
+        }
+        androidTest {
+            java.srcDirs += sharedTestDir
+        }
     }
 
     buildFeatures {
@@ -33,6 +48,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -85,10 +101,34 @@ dependencies {
     testImplementation deps.coroutines.test
     testImplementation deps.truth
 
+    androidTestImplementation "org.koin:koin-test:$koin_version"
+
+
+    androidTestImplementation deps.junit
+    androidTestImplementation deps.mockito.core
+    androidTestImplementation deps.mockito.inline
+    androidTestImplementation deps.mock_web_server
+    androidTestImplementation deps.arch_core.testing
+    androidTestImplementation deps.coroutines.test
+    androidTestImplementation deps.truth
+
     androidTestImplementation deps.espresso.core
     androidTestImplementation deps.atsl.runner
     androidTestImplementation deps.atsl.rules
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // Resolve conflicts between main and test APK:
+    testImplementation deps.retrofit.runtime
+    implementation 'com.squareup.okio:okio:2.8.0'
+
+    androidTestImplementation deps.fragment.testing
+
+    debugImplementation deps.fragment.testing
+    debugImplementation deps.fragment.runtime_ktx
+    debugImplementation deps.atsl.core
+    debugImplementation deps.atsl.runner
+    debugImplementation deps.atsl.rules
+
 }

@@ -34,6 +34,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:id="@+id/cl_ticker"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/size_large"
                 app:isVisible="@{!viewModel.ticker.loading}">
