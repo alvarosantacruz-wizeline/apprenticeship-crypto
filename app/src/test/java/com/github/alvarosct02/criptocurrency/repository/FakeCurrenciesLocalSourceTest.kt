@@ -11,6 +11,8 @@ import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import org.junit.Rule
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -23,6 +25,9 @@ class FakeCurrenciesLocalSourceTest {
         val TICKER = Ticker(book = BOOK_1_ID)
         val ORDERS = BookOrders(book = BOOK_1_ID)
     }
+
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
 
     private val sourceLocal: CurrenciesLocalSource = FakeCurrenciesLocalSource()
 
