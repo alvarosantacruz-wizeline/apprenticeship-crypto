@@ -1,6 +1,11 @@
 package com.github.alvarosct02.criptocurrency.ui.currencyDetail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.UIState
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders

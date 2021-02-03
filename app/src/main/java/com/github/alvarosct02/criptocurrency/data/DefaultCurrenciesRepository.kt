@@ -1,15 +1,11 @@
 package com.github.alvarosct02.criptocurrency.data
 
-import android.util.Log
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.liveData
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSource
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteSource
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 
 class DefaultCurrenciesRepository(

@@ -1,10 +1,10 @@
 package com.github.alvarosct02.criptocurrency.data.source.remote.retrofit
 
+import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 class RetrofitApiClient(
     private val baseUrl: String

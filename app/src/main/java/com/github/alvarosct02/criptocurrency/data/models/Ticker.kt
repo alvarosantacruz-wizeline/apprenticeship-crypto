@@ -2,8 +2,6 @@ package com.github.alvarosct02.criptocurrency.data.models
 
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
-import java.math.MathContext
-import java.math.RoundingMode
 
 data class Ticker(
     @SerializedName("book") val book: String = "",

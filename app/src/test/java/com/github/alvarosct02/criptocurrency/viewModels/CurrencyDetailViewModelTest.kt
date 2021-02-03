@@ -3,11 +3,11 @@ package com.github.alvarosct02.criptocurrency.viewModels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
-import com.github.alvarosct02.criptocurrency.shared.observeForTesting
-import com.github.alvarosct02.criptocurrency.ui.currencyDetail.CurrencyDetailViewModel
 import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesLocalSource
 import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesRemoteSource
 import com.github.alvarosct02.criptocurrency.shared.TestCoroutineRule
+import com.github.alvarosct02.criptocurrency.shared.observeForTesting
+import com.github.alvarosct02.criptocurrency.ui.currencyDetail.CurrencyDetailViewModel
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After

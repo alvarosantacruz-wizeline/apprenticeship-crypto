@@ -1,6 +1,10 @@
 package com.github.alvarosct02.criptocurrency.ui.currencyList
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.alvarosct02.criptocurrency.Event
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.UIState

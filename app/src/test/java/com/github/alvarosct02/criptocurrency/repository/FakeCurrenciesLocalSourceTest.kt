@@ -7,7 +7,9 @@ import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSo
 import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesLocalSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner

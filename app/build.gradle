@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id "androidx.navigation.safeargs.kotlin"
 }
+apply from: '../buildsystem/lint.gradle'
 
 android {
     compileSdkVersion 30
