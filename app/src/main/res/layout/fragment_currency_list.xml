@@ -3,26 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-        <import type="android.view.View" />
-
-        <import type="androidx.core.content.ContextCompat" />
-
         <variable
             name="viewModel"
-            type="com.github.alvarosct02.criptocurrency.features.currencyList.CurrencyListViewModel" />
-
+            type="com.github.alvarosct02.criptocurrency.ui.currencyList.CurrencyListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/pb_currencies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isVisible="@{viewModel.items.loading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_currencies"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:items="@{viewModel.items}"
+            app:isVisible="@{!viewModel.items.loading}"
+            app:items="@{viewModel.items.data}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CriptoCurrency</string>
+    <string name="label_latest_asks">Latest Asks</string>
+    <string name="label_latest_bids">Latest Bids</string>
+    <string name="label_amount">Amount:</string>
+    <string name="label_price">Price:</string>
 </resources>

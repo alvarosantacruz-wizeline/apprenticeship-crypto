@@ -15,7 +15,7 @@
 
         <variable
             name="viewModel"
-            type="com.github.alvarosct02.criptocurrency.features.currencyList.CurrencyListViewModel" />
+            type="com.github.alvarosct02.criptocurrency.ui.currencyList.CurrencyListViewModel" />
 
     </data>
 
