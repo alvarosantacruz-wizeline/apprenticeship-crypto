@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.alvarosct02.criptocurrency.EventObserver
 import com.github.alvarosct02.criptocurrency.R
 import com.github.alvarosct02.criptocurrency.VerticalSpaceItemDecoration
 import com.github.alvarosct02.criptocurrency.databinding.FragmentCurrencyListBinding
 import com.github.alvarosct02.criptocurrency.ui.base.BaseFragment
-import org.koin.android.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CurrencyListFragment : BaseFragment() {
-    private val viewModel: CurrencyListViewModel by viewModel()
+    private val viewModel: CurrencyListViewModel by viewModels()
     private lateinit var binding: FragmentCurrencyListBinding
 
     override fun onCreateView(

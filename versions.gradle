@@ -1,7 +1,7 @@
 ext.deps = [:]
 def versions = [:]
 versions.activity = '1.1.0'
-versions.android_gradle_plugin = '4.0.0'
+versions.android_gradle_plugin = '4.1.2'
 versions.annotations = "1.0.0"
 versions.apache_commons = "2.5"
 versions.appcompat = "1.2.0-alpha02"
@@ -21,6 +21,7 @@ versions.espresso = "3.2.0"
 versions.fragment = "1.2.5"
 versions.glide = "4.8.0"
 versions.hamcrest = "1.3"
+versions.hilt = "2.31.2-alpha"
 versions.junit = "4.12"
 versions.kotlin = "1.4.21"
 versions.lifecycle = "2.2.0"
@@ -159,6 +160,13 @@ deps.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$ver
 deps.paging_runtime = "androidx.paging:paging-runtime:$versions.paging"
 
 deps.recyclerview = "androidx.recyclerview:recyclerview:$versions.recyclerview"
+
+def hilt = [:]
+hilt.plugin = "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt"
+hilt.android = "com.google.dagger:hilt-android:$versions.hilt"
+hilt.compiler = "com.google.dagger:hilt-android-compiler:$versions.hilt"
+hilt.android_testing = "com.google.dagger:hilt-android-testing:$versions.hilt"
+deps.hilt = hilt
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"

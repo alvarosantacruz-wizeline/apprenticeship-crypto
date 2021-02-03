@@ -1,5 +1,6 @@
 package com.github.alvarosct02.criptocurrency.repository
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
@@ -10,11 +11,10 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import org.junit.Rule
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)

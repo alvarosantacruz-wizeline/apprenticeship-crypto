@@ -8,21 +8,19 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-object ViewUtils
-
-@BindingAdapter("app:isVisible")
+@BindingAdapter("isVisible")
 fun View.isViewVisible(value: Boolean?) {
     this.isVisible = value ?: false
 }
 
-@BindingAdapter("app:items")
+@BindingAdapter("items")
 fun <T> RecyclerView.setItems(items: List<T>?) {
     items?.let {
         (this.adapter as? ListAdapter<T, *>)?.submitList(items)
     }
 }
 
-@BindingAdapter("app:cryptoIcon")
+@BindingAdapter("cryptoIcon")
 fun ImageView.setIcon(book: String?) {
     book?.split("_")?.firstOrNull()?.let {
         val drawableId = resources.getIdentifier("ic_$it", "drawable", context.packageName)

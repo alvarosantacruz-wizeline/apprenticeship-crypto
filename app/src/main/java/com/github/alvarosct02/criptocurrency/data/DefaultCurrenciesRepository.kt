@@ -20,7 +20,7 @@ class DefaultCurrenciesRepository(
         try {
             refreshAllBooks()
         } catch (e: Exception) {
-            print("ASCT" + e.message ?: "")
+            print("ASCT" + e.message)
             e.printStackTrace()
             emit(Resource.Error(errorType = ErrorType.Unknown))
         }

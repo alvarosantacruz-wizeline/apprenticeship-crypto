@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id "androidx.navigation.safeargs.kotlin"
+    id 'dagger.hilt.android.plugin'
 }
 apply from: '../buildsystem/lint.gradle'
 
@@ -22,7 +23,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "com.github.alvarosct02.criptocurrency.MyRunner"
+        testInstrumentationRunner "com.github.alvarosct02.criptocurrency.TestRunner"
 
         buildConfigField "String", "BASE_BITSO_URL", "\"https://api.bitso.com/v3/\""
         buildConfigField "String", "DATABASE_NAME", "\"criptocurreny.db\""
@@ -85,15 +86,12 @@ dependencies {
     implementation deps.room.ktx
     kapt deps.room.compiler
 
-//    Koin
-    def koin_version = "2.1.5"
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+//    Hilt
+    implementation deps.hilt.android
+    kapt deps.hilt.compiler
 
 
 //    Test
-    testImplementation "org.koin:koin-test:$koin_version"
-
     testImplementation deps.junit
     testImplementation deps.mockito.core
     testImplementation deps.mockito.inline
@@ -102,7 +100,6 @@ dependencies {
     testImplementation deps.coroutines.test
     testImplementation deps.truth
 
-    androidTestImplementation "org.koin:koin-test:$koin_version"
 
 
     androidTestImplementation deps.junit
@@ -116,6 +113,9 @@ dependencies {
     androidTestImplementation deps.espresso.core
     androidTestImplementation deps.atsl.runner
     androidTestImplementation deps.atsl.rules
+
+    androidTestImplementation deps.hilt.android_testing
+    kaptAndroidTest deps.hilt.compiler
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

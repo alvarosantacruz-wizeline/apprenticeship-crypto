@@ -10,8 +10,11 @@ import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.UIState
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class CurrencyDetailViewModel(
+@HiltViewModel
+class CurrencyDetailViewModel @Inject constructor(
     private val currenciesRepository: CurrenciesRepository
 ) : ViewModel() {
 

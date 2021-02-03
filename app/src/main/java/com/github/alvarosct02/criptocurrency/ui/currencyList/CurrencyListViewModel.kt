@@ -9,9 +9,12 @@ import com.github.alvarosct02.criptocurrency.Event
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.UIState
 import com.github.alvarosct02.criptocurrency.data.models.Book
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CurrencyListViewModel(
+@HiltViewModel
+class CurrencyListViewModel @Inject constructor(
     private val currenciesRepository: CurrenciesRepository
 ) : ViewModel() {
 
