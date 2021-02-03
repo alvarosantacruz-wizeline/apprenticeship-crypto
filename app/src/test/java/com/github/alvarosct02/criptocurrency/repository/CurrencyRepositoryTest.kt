@@ -95,7 +95,6 @@ class CurrencyRepositoryTest {
             verify(local, times(1)).observeTickerByBook(bookId)
         }
 
-
     @Test
     fun `when ticker service fails then do not store and return from local`() =
         testCoroutineRule.runBlockingTest {

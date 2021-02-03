@@ -17,7 +17,6 @@ class CurrenciesRoomSource(
     private val appDatabase: AppDatabase
 ) : CurrenciesLocalSource {
 
-
     override fun observeAllBooks(): LiveData<Resource<List<Book>>> {
         return Transformations.map(appDatabase.bookEntityDao().observeAll()) { result ->
             if (result.isNullOrEmpty()) {
@@ -82,5 +81,4 @@ class CurrenciesRoomSource(
         val entity = BookOrdersEntity.fromModel(bookOrders)
         appDatabase.bookOrdersEntityDao().insert(entity)
     }
-
 }

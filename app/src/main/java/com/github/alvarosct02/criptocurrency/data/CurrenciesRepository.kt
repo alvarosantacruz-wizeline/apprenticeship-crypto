@@ -18,5 +18,4 @@ interface CurrenciesRepository {
     suspend fun refreshTickerByBook(book: String): Ticker
 
     suspend fun refreshOrdersByBook(book: String): BookOrders
-
 }

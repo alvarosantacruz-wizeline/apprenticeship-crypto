@@ -55,5 +55,4 @@ class CurrencyListViewModelTest {
             assertThat(subject.value?.data).hasSize(25)
         }
     }
-
 }

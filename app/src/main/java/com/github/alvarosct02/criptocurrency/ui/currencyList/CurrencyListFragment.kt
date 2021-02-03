@@ -35,9 +35,12 @@ class CurrencyListFragment : BaseFragment() {
     }
 
     private fun setupNavigation() {
-        viewModel.openBookEvent.observe(viewLifecycleOwner, EventObserver {
-            openBookEvent(it.book)
-        })
+        viewModel.openBookEvent.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                openBookEvent(it.book)
+            }
+        )
     }
 
     private fun openBookEvent(bookId: String) {
@@ -52,5 +55,4 @@ class CurrencyListFragment : BaseFragment() {
         val spaceSize = resources.getDimensionPixelSize(R.dimen.size_default)
         binding.rvCurrencies.addItemDecoration(VerticalSpaceItemDecoration(spaceSize))
     }
-
 }

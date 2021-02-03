@@ -24,5 +24,4 @@ class CurrenciesRetrofitSource(
         delay(1000)
         return service.getBookOrders(book).payload
     }
-
 }

@@ -8,9 +8,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-object ViewUtils {
-
-}
+object ViewUtils
 
 @BindingAdapter("app:isVisible")
 fun View.isViewVisible(value: Boolean?) {

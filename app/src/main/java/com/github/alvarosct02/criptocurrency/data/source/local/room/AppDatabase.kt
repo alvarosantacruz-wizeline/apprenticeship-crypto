@@ -39,6 +39,5 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(): AppDatabase {
             return INSTANCE ?: throw RuntimeException()
         }
-
     }
 }

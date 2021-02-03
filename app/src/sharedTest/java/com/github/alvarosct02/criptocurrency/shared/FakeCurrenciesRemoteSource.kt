@@ -49,7 +49,6 @@ class FakeCurrenciesRemoteSource : CurrenciesRemoteSource {
         return result.payload
     }
 
-
     private fun enqueueResponse(fileName: String, headers: Map<String, String> = emptyMap()) {
         val inputStream = javaClass.classLoader!!
             .getResourceAsStream("api-response/$fileName")

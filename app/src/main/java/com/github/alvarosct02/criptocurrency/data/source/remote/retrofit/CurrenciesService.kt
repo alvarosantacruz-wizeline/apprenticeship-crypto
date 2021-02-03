@@ -20,5 +20,4 @@ interface CurrenciesService {
     suspend fun getBookOrders(
         @Query("book") book: String
     ): BitsoWrapper<BookOrders>
-
 }

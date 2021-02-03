@@ -35,6 +35,5 @@ class VerticalSpaceItemDecoration(
 //        Sides
         outRect.right = verticalSpaceHeight
         outRect.left = verticalSpaceHeight
-
     }
 }

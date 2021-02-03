@@ -89,5 +89,4 @@ class FakeCurrenciesLocalSourceTest {
         val savedTicker = sourceLocal.getOrdersByBook(BOOK_1_ID)
         assertNotNull(savedTicker)
     }
-
 }

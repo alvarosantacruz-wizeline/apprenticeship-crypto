@@ -18,7 +18,7 @@ import org.koin.test.KoinTest
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class CurrencyListFragmentTest: KoinTest {
+class CurrencyListFragmentTest : KoinTest {
 
     @Before
     fun setup() {

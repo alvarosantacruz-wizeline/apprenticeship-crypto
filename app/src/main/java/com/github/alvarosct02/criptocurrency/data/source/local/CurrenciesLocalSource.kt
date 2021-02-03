@@ -25,5 +25,4 @@ interface CurrenciesLocalSource {
     suspend fun getOrdersByBook(book: String): BookOrders?
 
     suspend fun saveBookOrders(bookOrders: BookOrders)
-
 }

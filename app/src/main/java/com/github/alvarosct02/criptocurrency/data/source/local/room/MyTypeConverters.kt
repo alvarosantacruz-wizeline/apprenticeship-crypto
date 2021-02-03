@@ -21,6 +21,4 @@ class MyTypeConverters {
     fun bookOrderListToString(objList: List<BookOrder>?): String? {
         return objList?.let { gson.toJson(it) }
     }
-
-
 }

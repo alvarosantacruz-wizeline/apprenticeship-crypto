@@ -11,13 +11,12 @@ data class UIState<T>(
         fun <T> Error(message: String, data: T? = null) = UIState<T>(data = data, errorMessage = message)
         fun <T> Loading() = UIState<T>(isLoading = true)
 
-        fun<T> fromResource(resource: Resource<T>): UIState<T> {
-            return when(resource) {
+        fun <T> fromResource(resource: Resource<T>): UIState<T> {
+            return when (resource) {
                 is Resource.Success -> OnData(resource.data)
                 is Resource.Error -> Error(resource.errorType.message)
                 is Resource.Loading -> Loading()
             }
         }
     }
-
 }

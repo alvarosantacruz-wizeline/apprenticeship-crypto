@@ -38,7 +38,6 @@ class CurrencyListAdapter(
             }
         }
     }
-
 }
 
 class BookDiffCallback : DiffUtil.ItemCallback<Book>() {

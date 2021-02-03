@@ -11,9 +11,8 @@ import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
-
 @ExperimentalCoroutinesApi
-class TestCoroutineRule: TestRule {
+class TestCoroutineRule : TestRule {
 
     val testDispatcher = TestCoroutineDispatcher()
     val testScope = TestCoroutineScope(testDispatcher)
@@ -32,5 +31,4 @@ class TestCoroutineRule: TestRule {
 
     fun runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) =
         testScope.runBlockingTest { block() }
-
 }

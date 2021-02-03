@@ -11,5 +11,4 @@ interface CurrenciesRemoteSource {
     suspend fun getTickerByBook(book: String): Ticker
 
     suspend fun getOrdersByBook(book: String): BookOrders
-
 }

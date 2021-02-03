@@ -38,7 +38,6 @@ class OrderListAdapter(
             }
         }
     }
-
 }
 
 class BookOrderDiffCallback : DiffUtil.ItemCallback<BookOrder>() {

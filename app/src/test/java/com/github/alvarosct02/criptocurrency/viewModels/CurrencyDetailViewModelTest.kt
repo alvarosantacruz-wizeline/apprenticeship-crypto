@@ -68,5 +68,4 @@ class CurrencyDetailViewModelTest {
             assertThat(subject.value?.data?.asks?.size).isGreaterThan(5)
         }
     }
-
 }

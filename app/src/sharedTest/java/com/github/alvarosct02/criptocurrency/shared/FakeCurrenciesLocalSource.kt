@@ -21,8 +21,6 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     private var tickerLiveData = MutableLiveData<Resource<Ticker>>()
     private var ordersLiveData = MutableLiveData<Resource<BookOrders>>()
 
-
-
     override fun observeAllBooks(): LiveData<Resource<List<Book>>> {
         return booksLiveData
     }
@@ -30,8 +28,9 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     @WorkerThread
     override suspend fun getAllBooks(): List<Book>? {
         val result = booksList
-        booksLiveData.postValue(result?.let { Resource.Success(it) }
-            ?: Resource.Error(errorType = ErrorType.Unknown)
+        booksLiveData.postValue(
+            result?.let { Resource.Success(it) }
+                ?: Resource.Error(errorType = ErrorType.Unknown)
         )
         return result
     }
@@ -40,8 +39,9 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     override suspend fun saveAllBooks(books: List<Book>) {
         this.booksList = books
         val result = books
-        booksLiveData.postValue(result?.let { Resource.Success(it) }
-            ?: Resource.Error(errorType = ErrorType.Unknown)
+        booksLiveData.postValue(
+            result?.let { Resource.Success(it) }
+                ?: Resource.Error(errorType = ErrorType.Unknown)
         )
     }
 
@@ -52,8 +52,9 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     @WorkerThread
     override suspend fun getTickerByBook(book: String): Ticker? {
         val result = tickerMap[book]
-        tickerLiveData.postValue(result?.let { Resource.Success(it) }
-            ?: Resource.Error(errorType = ErrorType.Unknown)
+        tickerLiveData.postValue(
+            result?.let { Resource.Success(it) }
+                ?: Resource.Error(errorType = ErrorType.Unknown)
         )
         return result
     }
@@ -62,8 +63,9 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     override suspend fun saveBookTicker(ticker: Ticker) {
         this.tickerMap[ticker.book] = ticker
         val result = ticker
-        tickerLiveData.postValue(result?.let { Resource.Success(it) }
-            ?: Resource.Error(errorType = ErrorType.Unknown)
+        tickerLiveData.postValue(
+            result?.let { Resource.Success(it) }
+                ?: Resource.Error(errorType = ErrorType.Unknown)
         )
     }
 
@@ -74,8 +76,9 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     @WorkerThread
     override suspend fun getOrdersByBook(book: String): BookOrders? {
         val result = ordersMap[book]
-        ordersLiveData.postValue(result?.let { Resource.Success(it) }
-            ?: Resource.Error(errorType = ErrorType.Unknown)
+        ordersLiveData.postValue(
+            result?.let { Resource.Success(it) }
+                ?: Resource.Error(errorType = ErrorType.Unknown)
         )
         return result
     }
@@ -84,9 +87,9 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     override suspend fun saveBookOrders(bookOrders: BookOrders) {
         this.ordersMap[bookOrders.book] = bookOrders
         val result = bookOrders
-        ordersLiveData.postValue(result?.let { Resource.Success(it) }
-            ?: Resource.Error(errorType = ErrorType.Unknown)
+        ordersLiveData.postValue(
+            result?.let { Resource.Success(it) }
+                ?: Resource.Error(errorType = ErrorType.Unknown)
         )
     }
-
 }

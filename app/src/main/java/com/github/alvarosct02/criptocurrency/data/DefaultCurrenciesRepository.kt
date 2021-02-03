@@ -65,5 +65,4 @@ class DefaultCurrenciesRepository(
         local.saveBookOrders(orders.copy(book = book))
         return orders
     }
-
 }

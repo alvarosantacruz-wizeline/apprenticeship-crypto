@@ -21,5 +21,4 @@ interface TickerEntityDao {
 
     @Query("DELETE FROM TickerEntity")
     suspend fun deleteAll()
-
 }

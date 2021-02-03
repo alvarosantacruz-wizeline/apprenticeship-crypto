@@ -1,10 +1,10 @@
 package com.github.alvarosct02.criptocurrency.data.source.remote.retrofit
 
-import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class RetrofitApiClient(
     private val baseUrl: String
@@ -12,12 +12,14 @@ class RetrofitApiClient(
 
     private fun getOkHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .addInterceptor {chain ->
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }
+            )
+            .addInterceptor { chain ->
                 val requestBuilder = chain.request().newBuilder()
-                val userAgent = System.getProperty("http.agent")?: DEFAULT_USER_AGENT
+                val userAgent = System.getProperty("http.agent") ?: DEFAULT_USER_AGENT
                 requestBuilder.header("User-Agent", userAgent)
                 chain.proceed(requestBuilder.build())
             }

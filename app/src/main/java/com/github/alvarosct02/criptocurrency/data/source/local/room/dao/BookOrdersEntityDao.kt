@@ -21,5 +21,4 @@ interface BookOrdersEntityDao {
 
     @Query("DELETE FROM BookOrdersEntity")
     suspend fun deleteAll()
-
 }

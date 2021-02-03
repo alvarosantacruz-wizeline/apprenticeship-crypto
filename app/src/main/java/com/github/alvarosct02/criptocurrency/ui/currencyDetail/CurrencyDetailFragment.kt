@@ -11,7 +11,6 @@ import com.github.alvarosct02.criptocurrency.databinding.FragmentCurrencyDetailB
 import com.github.alvarosct02.criptocurrency.ui.base.BaseFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 class CurrencyDetailFragment : BaseFragment() {
 
     private val args: CurrencyDetailFragmentArgs by navArgs()
@@ -39,8 +38,6 @@ class CurrencyDetailFragment : BaseFragment() {
         viewModel.setBook(bookId)
     }
 
-
-
     private fun setupListAdapters() {
         val spaceSize = resources.getDimensionPixelSize(R.dimen.size_default)
 
@@ -50,5 +47,4 @@ class CurrencyDetailFragment : BaseFragment() {
         binding.rvBids.adapter = OrderListAdapter(viewModel)
         binding.rvBids.addItemDecoration(VerticalSpaceItemDecoration(spaceSize))
     }
-
 }

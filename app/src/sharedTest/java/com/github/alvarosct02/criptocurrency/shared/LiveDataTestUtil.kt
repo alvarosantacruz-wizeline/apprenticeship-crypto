@@ -35,7 +35,6 @@ fun <T> LiveData<T>.observeForTesting(block: () -> Unit) {
     }
 }
 
-
 /**
  * Gets the value of a [LiveData] or waits for it to have one, with a timeout.
  *
@@ -67,7 +66,6 @@ fun <T> LiveData<T>.getOrAwaitValue(
             this.removeObserver(observer)
             throw TimeoutException("LiveData value was never set.")
         }
-
     } finally {
         this.removeObserver(observer)
     }
