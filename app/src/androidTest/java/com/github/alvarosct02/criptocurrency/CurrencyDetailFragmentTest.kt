@@ -26,7 +26,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @HiltAndroidTest
-@UninstallModules(NetworkModule::class)
+@UninstallModules(DataModule::class)
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class CurrencyDetailFragmentTest {
