@@ -1,6 +1,6 @@
 # Crypto Challenge
 
-## Introduction
+## Introduction 3
 
 Thank you for participating in the Android Apprenticeship Program!
 Here, you'll find instructions for completing the challenge.
