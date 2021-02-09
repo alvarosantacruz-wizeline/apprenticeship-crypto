@@ -1,7 +1,6 @@
 package com.github.alvarosct02.criptocurrency.data
 
 import androidx.lifecycle.liveData
-import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSource
@@ -13,12 +12,12 @@ class DefaultCurrenciesRepository(
     private val local: CurrenciesLocalSource
 ) : CurrenciesRepository {
 
-    override fun getAllBooks() = liveData<Resource<List<Book>>> {
+    override fun getAllTickers() = liveData<Resource<List<Ticker>>> {
         emit(Resource.Loading())
         delay(500)
-        emitSource(local.observeAllBooks())
+        emitSource(local.observeAllTickers())
         try {
-            refreshAllBooks()
+            refreshAllTickers()
         } catch (e: Exception) {
             print("ASCT" + e.message)
             e.printStackTrace()
@@ -48,9 +47,9 @@ class DefaultCurrenciesRepository(
         }
     }
 
-    override suspend fun refreshAllBooks(): List<Book> {
+    override suspend fun refreshAllTickers(): List<Ticker> {
         val books = api.getAllBooks()
-        local.saveAllBooks(books)
+        local.saveAllTickers(books)
         return books
     }
 

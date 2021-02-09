@@ -1,10 +1,15 @@
 package com.github.alvarosct02.criptocurrency.data.models
 
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
+import java.math.RoundingMode
 
+@Entity
 data class Ticker(
-    @SerializedName("book") val book: String = "",
+    @SerializedName("book") @PrimaryKey val book: String = "",
     @SerializedName("volume") val volume: String = "",
     @SerializedName("high") val high: String = "",
     @SerializedName("last") val last: String = "",
@@ -13,15 +18,34 @@ data class Ticker(
     @SerializedName("ask") val ask: String = "",
     @SerializedName("bid") val bid: String = "",
     @SerializedName("created_at") val createdAt: String = "",
+    @SerializedName("change_24") val change24: String = "",
 ) {
 
-    val avgPrice: String
-        get() {
-            val askDecimal = ask.toBigDecimalOrNull() ?: BigDecimal.ZERO
-            val bidDecimal = bid.toBigDecimalOrNull() ?: BigDecimal.ZERO
-            val result = (askDecimal.plus(bidDecimal)).divide(BigDecimal(2))
-//            result.round(MathContext(2, RoundingMode.CEILING))
-            return result.toString()
-//            return (((ask.toDoubleOrNull() ?: 0.0) + (bid.toDoubleOrNull() ?: 0.0)) / 2).toString()
+    @Ignore
+    val lastPrice: BigDecimal = run {
+        val lastDecimal = last.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val result = lastDecimal
+        result
+    }
+
+    @Ignore
+    val dayChangePercentage: BigDecimal = run {
+        val lastDecimal = last.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val change24Decimal = change24.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val result = try {
+            (lastDecimal.divide(lastDecimal.minus(change24Decimal), 4, RoundingMode.HALF_UP).minus(BigDecimal.ONE))
+                .times(BigDecimal.valueOf(100)).setScale(2)
+        } catch (e: Exception) {
+            BigDecimal.valueOf(100)
         }
+        result
+    }
+
+    @Ignore
+    val avgPrice: String = run {
+        val askDecimal = ask.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val bidDecimal = bid.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val result = (askDecimal.plus(bidDecimal)).divide(BigDecimal(2))
+        result.toString()
+    }
 }

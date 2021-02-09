@@ -2,7 +2,6 @@ package com.github.alvarosct02.criptocurrency.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
-import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRetrofitSource

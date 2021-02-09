@@ -2,17 +2,16 @@ package com.github.alvarosct02.criptocurrency.data.source.local
 
 import androidx.lifecycle.LiveData
 import com.github.alvarosct02.criptocurrency.data.Resource
-import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 
 interface CurrenciesLocalSource {
 
-    fun observeAllBooks(): LiveData<Resource<List<Book>>>
+    fun observeAllTickers(): LiveData<Resource<List<Ticker>>>
 
-    suspend fun getAllBooks(): List<Book>?
+    suspend fun getAllTickers(): List<Ticker>?
 
-    suspend fun saveAllBooks(books: List<Book>)
+    suspend fun saveAllTickers(books: List<Ticker>)
 
     fun observeTickerByBook(book: String): LiveData<Resource<Ticker>>
 

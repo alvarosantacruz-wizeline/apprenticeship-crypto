@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.alvarosct02.criptocurrency.data.models.Book
+import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.databinding.ItemListCurrencyBinding
 
 class CurrencyListAdapter(
     private val viewModel: CurrencyListViewModel
-) : ListAdapter<Book, CurrencyListAdapter.ViewHolder>(BookDiffCallback()) {
+) : ListAdapter<Ticker, CurrencyListAdapter.ViewHolder>(BookDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -24,9 +24,9 @@ class CurrencyListAdapter(
     class ViewHolder(private val binding: ItemListCurrencyBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: CurrencyListViewModel, book: Book) {
+        fun bind(viewModel: CurrencyListViewModel, ticker: Ticker) {
             binding.viewModel = viewModel
-            binding.book = book
+            binding.ticker = ticker
             binding.executePendingBindings()
         }
 
@@ -40,12 +40,12 @@ class CurrencyListAdapter(
     }
 }
 
-class BookDiffCallback : DiffUtil.ItemCallback<Book>() {
-    override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
-        return oldItem == newItem
+class BookDiffCallback : DiffUtil.ItemCallback<Ticker>() {
+    override fun areItemsTheSame(oldItem: Ticker, newItem: Ticker): Boolean {
+        return oldItem.book == newItem.book
     }
 
-    override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
-        return oldItem.book == newItem.book
+    override fun areContentsTheSame(oldItem: Ticker, newItem: Ticker): Boolean {
+        return oldItem.last == newItem.last
     }
 }

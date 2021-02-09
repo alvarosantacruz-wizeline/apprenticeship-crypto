@@ -12,6 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
+import com.github.alvarosct02.criptocurrency.di.DataModule
 import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesLocalSource
 import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesRemoteSource
 import com.github.alvarosct02.criptocurrency.ui.currencyList.CurrencyListFragment
@@ -37,7 +38,10 @@ class CurrencyListFragmentTest {
 
         @Provides
         fun provideCurrenciesRepository(): CurrenciesRepository {
-            return DefaultCurrenciesRepository(local = FakeCurrenciesLocalSource(), api = FakeCurrenciesRemoteSource())
+            return DefaultCurrenciesRepository(
+                local = FakeCurrenciesLocalSource(),
+                api = FakeCurrenciesRemoteSource()
+            )
         }
     }
 
@@ -58,6 +62,7 @@ class CurrencyListFragmentTest {
         onView(withId(R.id.rv_currencies))
             .check(matches(withEffectiveVisibility(Visibility.GONE)))
     }
+
     @Test
     fun whenResultComesTheRecyclerShouldBeDisplayed() {
         Thread.sleep(1000)

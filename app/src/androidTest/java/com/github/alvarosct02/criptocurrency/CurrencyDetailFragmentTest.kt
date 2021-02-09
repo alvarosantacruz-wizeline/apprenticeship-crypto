@@ -12,6 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
+import com.github.alvarosct02.criptocurrency.di.DataModule
 import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesLocalSource
 import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesRemoteSource
 import com.github.alvarosct02.criptocurrency.ui.currencyDetail.CurrencyDetailFragment

@@ -6,24 +6,24 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.github.alvarosct02.criptocurrency.BuildConfig
-import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.BookEntityDao
-import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.BookOrdersEntityDao
-import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.TickerEntityDao
-import com.github.alvarosct02.criptocurrency.data.source.local.room.entities.BookEntity
-import com.github.alvarosct02.criptocurrency.data.source.local.room.entities.BookOrdersEntity
-import com.github.alvarosct02.criptocurrency.data.source.local.room.entities.TickerEntity
+import com.github.alvarosct02.criptocurrency.data.models.BookOrders
+import com.github.alvarosct02.criptocurrency.data.models.Ticker
+import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
+import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.OrdersDao
+import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.TickerDao
+import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.TickerHistoryDao
 
 @Database(
-    entities = [BookEntity::class, BookOrdersEntity::class, TickerEntity::class],
+    entities = [BookOrders::class, Ticker::class, TickerHistory::class],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(MyTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun bookEntityDao(): BookEntityDao
-    abstract fun bookOrdersEntityDao(): BookOrdersEntityDao
-    abstract fun tickerEntityDao(): TickerEntityDao
+    abstract fun ordersDao(): OrdersDao
+    abstract fun tickerDao(): TickerDao
+    abstract fun tickerHistoryDao(): TickerHistoryDao
 
     companion object {
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.alvarosct02.criptocurrency.data.ErrorType
 import com.github.alvarosct02.criptocurrency.data.Resource
-import com.github.alvarosct02.criptocurrency.data.models.Book
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSource

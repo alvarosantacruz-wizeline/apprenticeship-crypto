@@ -1,5 +1,6 @@
 package com.github.alvarosct02.criptocurrency
 
+import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -7,6 +8,15 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import java.math.BigDecimal
+
+object BindingUtils {
+
+    @JvmStatic
+    fun colorFromNumber(number: BigDecimal): Int {
+        return if (number.signum() == -1) Color.RED else Color.GREEN
+    }
+}
 
 @BindingAdapter("isVisible")
 fun View.isViewVisible(value: Boolean?) {

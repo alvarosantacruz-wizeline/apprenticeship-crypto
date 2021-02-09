@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.alvarosct02.criptocurrency.EventObserver
 import com.github.alvarosct02.criptocurrency.R
@@ -12,11 +13,21 @@ import com.github.alvarosct02.criptocurrency.VerticalSpaceItemDecoration
 import com.github.alvarosct02.criptocurrency.databinding.FragmentCurrencyListBinding
 import com.github.alvarosct02.criptocurrency.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class CurrencyListFragment : BaseFragment() {
     private val viewModel: CurrencyListViewModel by viewModels()
     private lateinit var binding: FragmentCurrencyListBinding
+
+    init {
+        lifecycleScope.launchWhenStarted {
+            while (true) {
+                delay(5000)
+                viewModel.refreshAllTickers()
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

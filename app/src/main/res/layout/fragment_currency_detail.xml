@@ -101,6 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_list_order"
                 app:isVisible="@{!viewModel.orders.loading}"
                 app:items="@{viewModel.orders.data.asks.subList(0,5)}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -131,6 +132,7 @@
                 android:id="@+id/rv_bids"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:listitem="@layout/item_list_order"
                 android:nestedScrollingEnabled="false"
                 app:isVisible="@{!viewModel.orders.loading}"
                 app:items="@{viewModel.orders.data.bids.subList(0,5)}"
