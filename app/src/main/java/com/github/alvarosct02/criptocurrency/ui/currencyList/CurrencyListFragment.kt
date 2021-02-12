@@ -63,7 +63,7 @@ class CurrencyListFragment : BaseFragment() {
     }
 
     private fun setupListAdapter() {
-        val listAdapter = CurrencyListAdapter(viewModel)
+        val listAdapter = CurrencyListAdapter(viewModel, viewLifecycleOwner)
         binding.rvCurrencies.adapter = listAdapter
         val spaceSize = resources.getDimensionPixelSize(R.dimen.size_default)
         binding.rvCurrencies.addItemDecoration(VerticalSpaceItemDecoration(spaceSize))

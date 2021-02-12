@@ -2,14 +2,18 @@ package com.github.alvarosct02.criptocurrency.ui.currencyList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.github.alvarosct02.criptocurrency.BindingUtils
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.databinding.ItemListCurrencyBinding
+import com.github.alvarosct02.criptocurrency.setTickerData
 
 class CurrencyListAdapter(
-    private val viewModel: CurrencyListViewModel
+    private val viewModel: CurrencyListViewModel,
+    private val viewLifecycleOwner: LifecycleOwner
 ) : ListAdapter<Ticker, CurrencyListAdapter.ViewHolder>(BookDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -18,7 +22,7 @@ class CurrencyListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        return ViewHolder.from(parent, viewLifecycleOwner)
     }
 
     class ViewHolder(private val binding: ItemListCurrencyBinding) :
@@ -27,13 +31,20 @@ class CurrencyListAdapter(
         fun bind(viewModel: CurrencyListViewModel, ticker: Ticker) {
             binding.viewModel = viewModel
             binding.ticker = ticker
+
+            viewModel.tickerHistoryByBook(ticker.book)
+                .observe(binding.lifecycleOwner!!) { uiState ->
+                    val color = BindingUtils.colorFromNumber(ticker.dayChangePercentage)
+                    binding.chart?.setTickerData(uiState, color)
+                }
             binding.executePendingBindings()
         }
 
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(parent: ViewGroup, viewLifecycleOwner: LifecycleOwner): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemListCurrencyBinding.inflate(layoutInflater, parent, false)
+                binding.lifecycleOwner = viewLifecycleOwner
                 return ViewHolder(binding)
             }
         }

@@ -5,7 +5,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
+import com.github.alvarosct02.criptocurrency.data.models.TickerWithHistory
 
 @Dao
 interface TickerDao {
@@ -18,6 +20,10 @@ interface TickerDao {
 
     @Query("SELECT * FROM Ticker")
     fun observeAll(): LiveData<List<Ticker>?>
+
+    @Transaction
+    @Query("SELECT * FROM Ticker")
+    fun observeAllWithHistory(): LiveData<List<TickerWithHistory>>
 
     @Query("SELECT * FROM Ticker")
     suspend fun getAll(): List<Ticker>

@@ -90,6 +90,9 @@ dependencies {
     implementation deps.hilt.android
     kapt deps.hilt.compiler
 
+//    MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 
 //    Test
     testImplementation deps.junit

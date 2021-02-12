@@ -7,7 +7,10 @@ import com.github.alvarosct02.criptocurrency.data.ErrorType
 import com.github.alvarosct02.criptocurrency.data.Resource
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
+import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
+import com.github.alvarosct02.criptocurrency.data.models.TickerWithHistory
 import com.github.alvarosct02.criptocurrency.data.source.local.room.AppDatabase
+import java.util.Calendar
 
 class CurrenciesRoomSource(
     private val appDatabase: AppDatabase
@@ -23,14 +26,23 @@ class CurrenciesRoomSource(
         }
     }
 
-    @WorkerThread
-    override suspend fun getAllTickers(): List<Ticker> {
-        return appDatabase.tickerDao().getAll()
+    override fun observeAllTickersWithHistory(): LiveData<Resource<List<TickerWithHistory>>> {
+        return Transformations.map(appDatabase.tickerDao().observeAllWithHistory()) { result ->
+            if (result.isNullOrEmpty()) {
+                Resource.Error(errorType = ErrorType.Unknown)
+            } else {
+                Resource.Success(result)
+            }
+        }
     }
 
     @WorkerThread
     override suspend fun saveAllTickers(books: List<Ticker>) {
         appDatabase.tickerDao().insertAll(books)
+    }
+
+    override suspend fun saveAllTickersHistory(history: List<TickerHistory>) {
+        appDatabase.tickerHistoryDao().insertAll(history)
     }
 
     override fun observeTickerByBook(book: String): LiveData<Resource<Ticker>> {
@@ -43,9 +55,15 @@ class CurrenciesRoomSource(
         }
     }
 
-    @WorkerThread
-    override suspend fun getTickerByBook(book: String): Ticker {
-        return appDatabase.tickerDao().getById(book)
+    override fun observeTickerHistoryByBook(book: String): LiveData<Resource<List<TickerHistory>>> {
+        val time24HoursAgoInMillis = Calendar.getInstance().timeInMillis - 24 * 60 * 60 * 1000
+        return Transformations.map(appDatabase.tickerHistoryDao().observeById(book, time24HoursAgoInMillis.toString())) { result ->
+            if (result == null) {
+                Resource.Error(errorType = ErrorType.Unknown)
+            } else {
+                Resource.Success(result)
+            }
+        }
     }
 
     @WorkerThread
@@ -61,11 +79,6 @@ class CurrenciesRoomSource(
                 Resource.Success(result)
             }
         }
-    }
-
-    @WorkerThread
-    override suspend fun getOrdersByBook(book: String): BookOrders {
-        return appDatabase.ordersDao().getById(book)
     }
 
     @WorkerThread
