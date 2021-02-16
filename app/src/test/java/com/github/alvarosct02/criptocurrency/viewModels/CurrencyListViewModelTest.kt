@@ -11,11 +11,13 @@ import com.github.alvarosct02.criptocurrency.ui.currencyList.CurrencyListViewMod
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 
+@Ignore
 @ExperimentalCoroutinesApi
 class CurrencyListViewModelTest {
 
