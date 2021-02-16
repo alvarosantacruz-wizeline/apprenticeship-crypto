@@ -7,35 +7,34 @@ import com.github.alvarosct02.criptocurrency.data.ErrorType
 import com.github.alvarosct02.criptocurrency.data.Resource
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
+import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
+import com.github.alvarosct02.criptocurrency.data.models.TickerWithHistory
+import com.github.alvarosct02.criptocurrency.data.models.Trade
 import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSource
 import kotlin.collections.set
 
 class FakeCurrenciesLocalSource : CurrenciesLocalSource {
 
-    private var booksList: List<Book>? = null
+    private var booksList: List<Ticker>? = null
     private var tickerMap: MutableMap<String, Ticker> = mutableMapOf()
     private var ordersMap: MutableMap<String, BookOrders> = mutableMapOf()
 
-    private var booksLiveData = MutableLiveData<Resource<List<Book>>>()
+    private var booksLiveData = MutableLiveData<Resource<List<Ticker>>>()
+    private var tradesLiveData = MutableLiveData<Resource<List<Trade>>>()
+    private var tickerHistoryLiveData = MutableLiveData<Resource<List<TickerHistory>>>()
     private var tickerLiveData = MutableLiveData<Resource<Ticker>>()
     private var ordersLiveData = MutableLiveData<Resource<BookOrders>>()
 
-    override fun observeAllBooks(): LiveData<Resource<List<Book>>> {
+    override fun observeAllTickers(): LiveData<Resource<List<Ticker>>> {
         return booksLiveData
     }
 
-    @WorkerThread
-    override suspend fun getAllBooks(): List<Book>? {
-        val result = booksList
-        booksLiveData.postValue(
-            result?.let { Resource.Success(it) }
-                ?: Resource.Error(errorType = ErrorType.Unknown)
-        )
-        return result
+    override fun observeAllTickersWithHistory(): LiveData<Resource<List<TickerWithHistory>>> {
+        TODO("Not yet implemented")
     }
 
     @WorkerThread
-    override suspend fun saveAllBooks(books: List<Book>) {
+    override suspend fun saveAllTickers(books: List<Ticker>) {
         this.booksList = books
         val result = books
         booksLiveData.postValue(
@@ -44,18 +43,16 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
         )
     }
 
+    override suspend fun saveAllTickersHistory(history: List<TickerHistory>) {
+        TODO("Not yet implemented")
+    }
+
     override fun observeTickerByBook(book: String): LiveData<Resource<Ticker>> {
         return tickerLiveData
     }
 
-    @WorkerThread
-    override suspend fun getTickerByBook(book: String): Ticker? {
-        val result = tickerMap[book]
-        tickerLiveData.postValue(
-            result?.let { Resource.Success(it) }
-                ?: Resource.Error(errorType = ErrorType.Unknown)
-        )
-        return result
+    override fun observeTickerHistoryByBook(book: String): LiveData<Resource<List<TickerHistory>>> {
+        TODO("Not yet implemented")
     }
 
     @WorkerThread
@@ -73,16 +70,6 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
     }
 
     @WorkerThread
-    override suspend fun getOrdersByBook(book: String): BookOrders? {
-        val result = ordersMap[book]
-        ordersLiveData.postValue(
-            result?.let { Resource.Success(it) }
-                ?: Resource.Error(errorType = ErrorType.Unknown)
-        )
-        return result
-    }
-
-    @WorkerThread
     override suspend fun saveBookOrders(bookOrders: BookOrders) {
         this.ordersMap[bookOrders.book] = bookOrders
         val result = bookOrders
@@ -90,5 +77,13 @@ class FakeCurrenciesLocalSource : CurrenciesLocalSource {
             result?.let { Resource.Success(it) }
                 ?: Resource.Error(errorType = ErrorType.Unknown)
         )
+    }
+
+    override fun observeTradesByBook(book: String): LiveData<Resource<List<Trade>>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveTrades(trades: List<Trade>) {
+        TODO("Not yet implemented")
     }
 }

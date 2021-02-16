@@ -10,15 +10,21 @@ import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
 import com.github.alvarosct02.criptocurrency.data.models.TickerWithHistory
 import com.github.alvarosct02.criptocurrency.data.models.Trade
-import com.github.alvarosct02.criptocurrency.data.source.local.room.AppDatabase
+import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.OrdersDao
+import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.TickerDao
+import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.TickerHistoryDao
+import com.github.alvarosct02.criptocurrency.data.source.local.room.dao.TradeDao
 import java.util.Calendar
 
 class CurrenciesRoomSource(
-    private val appDatabase: AppDatabase
+    private val tickerDao: TickerDao,
+    private val tradeDao: TradeDao,
+    private val tickerHistoryDao: TickerHistoryDao,
+    private val ordersDao: OrdersDao,
 ) : CurrenciesLocalSource {
 
     override fun observeAllTickers(): LiveData<Resource<List<Ticker>>> {
-        return Transformations.map(appDatabase.tickerDao().observeAll()) { result ->
+        return Transformations.map(tickerDao.observeAll()) { result ->
             if (result.isNullOrEmpty()) {
                 Resource.Error(errorType = ErrorType.Unknown)
             } else {
@@ -28,7 +34,7 @@ class CurrenciesRoomSource(
     }
 
     override fun observeAllTickersWithHistory(): LiveData<Resource<List<TickerWithHistory>>> {
-        return Transformations.map(appDatabase.tickerDao().observeAllWithHistory()) { result ->
+        return Transformations.map(tickerDao.observeAllWithHistory()) { result ->
             if (result.isNullOrEmpty()) {
                 Resource.Error(errorType = ErrorType.Unknown)
             } else {
@@ -39,16 +45,16 @@ class CurrenciesRoomSource(
 
     @WorkerThread
     override suspend fun saveAllTickers(books: List<Ticker>) {
-        appDatabase.tickerDao().insertAll(books)
+        tickerDao.insertAll(books)
     }
 
     @WorkerThread
     override suspend fun saveAllTickersHistory(history: List<TickerHistory>) {
-        appDatabase.tickerHistoryDao().insertAll(history)
+        tickerHistoryDao.insertAll(history)
     }
 
     override fun observeTickerByBook(book: String): LiveData<Resource<Ticker>> {
-        return Transformations.map(appDatabase.tickerDao().observeById(book)) { result ->
+        return Transformations.map(tickerDao.observeById(book)) { result ->
             if (result == null) {
                 Resource.Error(errorType = ErrorType.Unknown)
             } else {
@@ -60,7 +66,7 @@ class CurrenciesRoomSource(
     override fun observeTickerHistoryByBook(book: String): LiveData<Resource<List<TickerHistory>>> {
         val time24HoursAgoInMillis = Calendar.getInstance().timeInMillis - 24 * 60 * 60 * 1000
         return Transformations.map(
-            appDatabase.tickerHistoryDao().observeById(book, time24HoursAgoInMillis.toString())
+            tickerHistoryDao.observeById(book, time24HoursAgoInMillis.toString())
         ) { result ->
             if (result == null) {
                 Resource.Error(errorType = ErrorType.Unknown)
@@ -72,11 +78,11 @@ class CurrenciesRoomSource(
 
     @WorkerThread
     override suspend fun saveBookTicker(ticker: Ticker) {
-        appDatabase.tickerDao().insert(ticker)
+        tickerDao.insert(ticker)
     }
 
     override fun observeOrdersByBook(book: String): LiveData<Resource<BookOrders>> {
-        return Transformations.map(appDatabase.ordersDao().observeById(book)) { result ->
+        return Transformations.map(ordersDao.observeById(book)) { result ->
             if (result == null) {
                 Resource.Error(errorType = ErrorType.Unknown)
             } else {
@@ -87,11 +93,11 @@ class CurrenciesRoomSource(
 
     @WorkerThread
     override suspend fun saveBookOrders(bookOrders: BookOrders) {
-        appDatabase.ordersDao().insert(bookOrders)
+        ordersDao.insert(bookOrders)
     }
 
     override fun observeTradesByBook(book: String): LiveData<Resource<List<Trade>>> {
-        return Transformations.map(appDatabase.tradeDao().observeById(book)) { result ->
+        return Transformations.map(tradeDao.observeById(book)) { result ->
             if (result == null) {
                 Resource.Error(errorType = ErrorType.Unknown)
             } else {
@@ -102,6 +108,6 @@ class CurrenciesRoomSource(
 
     @WorkerThread
     override suspend fun saveTrades(trades: List<Trade>) {
-        appDatabase.tradeDao().insertAll(trades)
+        tradeDao.insertAll(trades)
     }
 }

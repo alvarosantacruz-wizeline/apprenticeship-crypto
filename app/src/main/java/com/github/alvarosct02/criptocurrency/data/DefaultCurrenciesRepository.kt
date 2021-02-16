@@ -9,7 +9,7 @@ import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSo
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteSource
 
 class DefaultCurrenciesRepository(
-    private val api: CurrenciesRemoteSource,
+    private val remote: CurrenciesRemoteSource,
     private val local: CurrenciesLocalSource
 ) : CurrenciesRepository {
 
@@ -66,7 +66,7 @@ class DefaultCurrenciesRepository(
 
     override suspend fun refreshTickerHistoryByBook(book: String): List<TickerHistory>? {
         return try {
-            val tickerHistory = api.getTickerHistoryByBook(book)
+            val tickerHistory = remote.getTickerHistoryByBook(book)
             local.saveAllTickersHistory(tickerHistory)
             tickerHistory
         } catch (e: Exception) {
@@ -78,7 +78,7 @@ class DefaultCurrenciesRepository(
 
     override suspend fun refreshAllTickers(): List<Ticker>? {
         return try {
-            val books = api.getAllBooks()
+            val books = remote.getAllBooks()
             local.saveAllTickers(books)
             books
         } catch (e: Exception) {
@@ -91,7 +91,7 @@ class DefaultCurrenciesRepository(
     @Throws
     override suspend fun refreshTickerByBook(book: String): Ticker? {
         return try {
-            val ticker = api.getTickerByBook(book)
+            val ticker = remote.getTickerByBook(book)
             local.saveBookTicker(ticker)
             ticker
         } catch (e: Exception) {
@@ -103,7 +103,7 @@ class DefaultCurrenciesRepository(
 
     override suspend fun refreshOrdersByBook(book: String): BookOrders? {
         return try {
-            val orders = api.getOrdersByBook(book)
+            val orders = remote.getOrdersByBook(book)
             local.saveBookOrders(orders.copy(book = book))
             orders
         } catch (e: Exception) {
@@ -115,7 +115,7 @@ class DefaultCurrenciesRepository(
 
     override suspend fun refreshTradesByBook(book: String): List<Trade>? {
         return try {
-            val trades = api.getTrades(book)
+            val trades = remote.getTrades(book)
             local.saveTrades(trades)
             trades
         } catch (e: Exception) {

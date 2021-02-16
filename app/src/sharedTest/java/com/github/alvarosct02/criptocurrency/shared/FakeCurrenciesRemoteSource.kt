@@ -2,6 +2,8 @@ package com.github.alvarosct02.criptocurrency.shared
 
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
+import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
+import com.github.alvarosct02.criptocurrency.data.models.Trade
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteSource
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.CurrenciesService
 import kotlinx.coroutines.runBlocking
@@ -30,7 +32,7 @@ class FakeCurrenciesRemoteSource : CurrenciesRemoteSource {
         mockWebServer.shutdown()
     }
 
-    override suspend fun getAllBooks(): List<Book> {
+    override suspend fun getAllBooks(): List<Ticker> {
         enqueueResponse("all_books.json")
         val result = runBlocking { service.listAvailableBooks() }
         return result.payload
@@ -42,10 +44,18 @@ class FakeCurrenciesRemoteSource : CurrenciesRemoteSource {
         return result.payload
     }
 
+    override suspend fun getTickerHistoryByBook(book: String): List<TickerHistory> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getOrdersByBook(book: String): BookOrders {
         enqueueResponse("orders_btc_mxn.json")
         val result = runBlocking { service.getBookOrders("btc_mxn") }
         return result.payload
+    }
+
+    override suspend fun getTrades(book: String): List<Trade> {
+        TODO("Not yet implemented")
     }
 
     private fun enqueueResponse(fileName: String, headers: Map<String, String> = emptyMap()) {

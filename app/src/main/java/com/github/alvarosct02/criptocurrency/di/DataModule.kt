@@ -25,7 +25,12 @@ object DataModule {
 
     @Provides
     fun provideCurrenciesLocalSource(appDatabase: AppDatabase): CurrenciesLocalSource {
-        return CurrenciesRoomSource(appDatabase = appDatabase)
+        return CurrenciesRoomSource(
+            tickerDao = appDatabase.tickerDao(),
+            tradeDao = appDatabase.tradeDao(),
+            tickerHistoryDao = appDatabase.tickerHistoryDao(),
+            ordersDao = appDatabase.ordersDao(),
+        )
     }
 
     @Provides
@@ -38,6 +43,6 @@ object DataModule {
         local: CurrenciesLocalSource,
         remote: CurrenciesRemoteSource
     ): CurrenciesRepository {
-        return DefaultCurrenciesRepository(local = local, api = remote)
+        return DefaultCurrenciesRepository(local = local, remote = remote)
     }
 }

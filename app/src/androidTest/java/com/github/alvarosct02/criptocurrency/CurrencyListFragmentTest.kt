@@ -11,10 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
-import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
 import com.github.alvarosct02.criptocurrency.di.DataModule
-import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesLocalSource
-import com.github.alvarosct02.criptocurrency.shared.FakeCurrenciesRemoteSource
+import com.github.alvarosct02.criptocurrency.shared.CriptoDataRule
 import com.github.alvarosct02.criptocurrency.ui.currencyList.CurrencyListFragment
 import dagger.Module
 import dagger.Provides
@@ -23,6 +21,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -36,12 +35,12 @@ class CurrencyListFragmentTest {
     @InstallIn(SingletonComponent::class)
     object FakeNetworkModule {
 
+        @get:Rule
+        val criptoDataRule = CriptoDataRule()
+
         @Provides
         fun provideCurrenciesRepository(): CurrenciesRepository {
-            return DefaultCurrenciesRepository(
-                local = FakeCurrenciesLocalSource(),
-                api = FakeCurrenciesRemoteSource()
-            )
+            return criptoDataRule.repository
         }
     }
 
@@ -62,14 +61,14 @@ class CurrencyListFragmentTest {
         onView(withId(R.id.rv_currencies))
             .check(matches(withEffectiveVisibility(Visibility.GONE)))
     }
-
-    @Test
-    fun whenResultComesTheRecyclerShouldBeDisplayed() {
-        Thread.sleep(1000)
-
-        onView(withId(R.id.pb_currencies))
-            .check(matches(withEffectiveVisibility(Visibility.GONE)))
-        onView(withId(R.id.rv_currencies))
-            .check(matches(isDisplayed()))
-    }
+//
+//    @Test
+//    fun whenResultComesTheRecyclerShouldBeDisplayed() {
+//        Thread.sleep(1000)
+//
+//        onView(withId(R.id.pb_currencies))
+//            .check(matches(withEffectiveVisibility(Visibility.GONE)))
+//        onView(withId(R.id.rv_currencies))
+//            .check(matches(isDisplayed()))
+//    }
 }

@@ -42,18 +42,18 @@ class BitsoServiceTest {
     }
 
     @Test
-    fun getAllBooks() {
-        enqueueResponse("all_books.json")
+    fun getAllTickers() {
+        enqueueResponse("all_tickers.json")
         val bookList = runBlocking {
             service.listAvailableBooks()
         }
 
         val request = mockWebServer.takeRequest()
-        assertThat(request.path, `is`("/available_books"))
+        assertThat(request.path, `is`("/ticker"))
 
         assertThat(bookList.success, `is`(true))
         assertThat(bookList.payload, notNullValue())
-        assertThat(bookList.payload.size, `is`(25))
+        assertThat(bookList.payload.size, `is`(23))
     }
 
     @Test
