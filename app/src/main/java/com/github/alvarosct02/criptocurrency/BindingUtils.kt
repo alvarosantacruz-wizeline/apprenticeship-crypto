@@ -1,6 +1,7 @@
 package com.github.alvarosct02.criptocurrency
 
 import android.graphics.Color
+import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.ColorInt
@@ -71,7 +72,10 @@ fun LineChart.setTickerData(uiState: UIState<List<TickerHistory>>?, @ColorInt ch
 }
 
 @BindingAdapter("chartDataInteractive", "chartColor")
-fun LineChart.setTickerDataInteractive(uiState: UIState<List<TickerHistory>>?, @ColorInt chartColor: Int) {
+fun LineChart.setTickerDataInteractive(
+    uiState: UIState<List<TickerHistory>>?,
+    @ColorInt chartColor: Int
+) {
     val tickerHistory = uiState?.data ?: listOf()
     val entries: List<Entry> = tickerHistory.map {
         Entry(it.bucketStartTime.toFloat(), it.lastRate.toFloatOrNull() ?: 0f)
@@ -91,9 +95,13 @@ fun LineChart.setTickerDataInteractive(uiState: UIState<List<TickerHistory>>?, @
         axisLeft.setDrawGridLines(true)
         axisLeft.isEnabled = false
         axisRight.isEnabled = true
+
+        axisRight.textColor = TypedValue().also {
+            context.theme.resolveAttribute(R.attr.colorOnBackground, it, true)
+        }.data
         axisRight.setDrawGridLines(true)
         xAxis.setDrawGridLines(false)
-        xAxis.isEnabled = true
+        xAxis.isEnabled = false
         legend.isEnabled = false
         description.isEnabled = false
         setViewPortOffsets(0f, 0f, 0f, 0f)
