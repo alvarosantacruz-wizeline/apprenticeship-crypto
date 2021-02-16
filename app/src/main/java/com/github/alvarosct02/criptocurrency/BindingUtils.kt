@@ -59,7 +59,49 @@ fun LineChart.setTickerData(uiState: UIState<List<TickerHistory>>?, @ColorInt ch
         xAxis.isEnabled = false
         legend.isEnabled = false
         description.isEnabled = false
+
+        setTouchEnabled(false)
+        isDragEnabled = false
+        setScaleEnabled(false)
+        setPinchZoom(false)
+
         setViewPortOffsets(0f, 0f, 0f, 0f)
+        invalidate() // refresh
+    }
+}
+
+@BindingAdapter("chartDataInteractive", "chartColor")
+fun LineChart.setTickerDataInteractive(uiState: UIState<List<TickerHistory>>?, @ColorInt chartColor: Int) {
+    val tickerHistory = uiState?.data ?: listOf()
+    val entries: List<Entry> = tickerHistory.map {
+        Entry(it.bucketStartTime.toFloat(), it.lastRate.toFloatOrNull() ?: 0f)
+    }
+    val dataSet = LineDataSet(entries, "Label").apply {
+        setDrawValues(false)
+
+        setDrawCircles(true)
+        setDrawFilled(true)
+
+        fillColor = (chartColor and 0x00FFFFFF) or 0x30000000
+        color = chartColor
+    }
+    val lineData = LineData(dataSet)
+    this.apply {
+        data = lineData
+        axisLeft.setDrawGridLines(true)
+        axisLeft.isEnabled = false
+        axisRight.isEnabled = true
+        axisRight.setDrawGridLines(true)
+        xAxis.setDrawGridLines(false)
+        xAxis.isEnabled = true
+        legend.isEnabled = false
+        description.isEnabled = false
+        setViewPortOffsets(0f, 0f, 0f, 0f)
+
+        setTouchEnabled(false)
+        setScaleEnabled(false)
+        setPinchZoom(false)
+
         invalidate() // refresh
     }
 }
@@ -71,4 +113,14 @@ fun ImageView.setIcon(book: String?) {
         val drawable = ContextCompat.getDrawable(context, drawableId)
         this.setImageDrawable(drawable)
     }
+}
+
+@BindingAdapter("makerSide")
+fun ImageView.setMakerSide(makerSide: String?) {
+    val color = if (makerSide == Constants.MAKER_SIDE_SELL) Color.RED else Color.GREEN
+    val drawableRes = if (makerSide == Constants.MAKER_SIDE_SELL) R.drawable.ic_arrow_down
+    else R.drawable.ic_arrow_up
+    val drawable = ContextCompat.getDrawable(context, drawableRes)
+    this.setImageDrawable(drawable)
+    this.setColorFilter(color)
 }

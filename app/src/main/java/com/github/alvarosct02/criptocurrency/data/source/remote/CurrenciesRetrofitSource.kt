@@ -3,6 +3,7 @@ package com.github.alvarosct02.criptocurrency.data.source.remote
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
+import com.github.alvarosct02.criptocurrency.data.models.Trade
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.CurrenciesService
 import java.util.Calendar
 
@@ -36,5 +37,9 @@ class CurrenciesRetrofitSource(
 
     override suspend fun getOrdersByBook(book: String): BookOrders {
         return service.getBookOrders(book).payload
+    }
+
+    override suspend fun getTrades(book: String): List<Trade> {
+        return service.getTrades(book).payload
     }
 }

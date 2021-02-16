@@ -6,6 +6,7 @@ import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
 import com.github.alvarosct02.criptocurrency.data.models.TickerWithHistory
+import com.github.alvarosct02.criptocurrency.data.models.Trade
 
 interface CurrenciesLocalSource {
 
@@ -26,4 +27,8 @@ interface CurrenciesLocalSource {
     fun observeOrdersByBook(book: String): LiveData<Resource<BookOrders>>
 
     suspend fun saveBookOrders(bookOrders: BookOrders)
+
+    fun observeTradesByBook(book: String): LiveData<Resource<List<Trade>>>
+
+    suspend fun saveTrades(trades: List<Trade>)
 }

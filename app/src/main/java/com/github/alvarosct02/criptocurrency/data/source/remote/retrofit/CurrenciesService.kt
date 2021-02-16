@@ -3,6 +3,7 @@ package com.github.alvarosct02.criptocurrency.data.source.remote.retrofit
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
+import com.github.alvarosct02.criptocurrency.data.models.Trade
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -28,4 +29,9 @@ interface CurrenciesService {
     suspend fun getBookOrders(
         @Query("book") book: String
     ): BitsoWrapper<BookOrders>
+
+    @GET("trades")
+    suspend fun getTrades(
+        @Query("book") book: String
+    ): BitsoWrapper<List<Trade>>
 }

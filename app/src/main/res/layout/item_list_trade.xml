@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="trade"
+            type="com.github.alvarosct02.criptocurrency.data.models.Trade" />
+
+        <variable
+            name="viewModel"
+            type="com.github.alvarosct02.criptocurrency.ui.currencyDetail.CurrencyDetailViewModel" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentPadding="@dimen/size_small">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_maker_side"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:makerSide="@{trade.makerSide}"
+                tools:src="@drawable/ic_arrow_up" />
+
+            <TextView
+                android:id="@+id/label_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_small"
+                android:text="@string/label_price"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_maker_side"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_small"
+                android:text="@{trade.price}"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/gl_half"
+                app:layout_constraintStart_toEndOf="@id/label_price"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="BTC_USD" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_half"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+
+            <TextView
+                android:id="@+id/label_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/label_amount"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/gl_half"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_small"
+                android:text="@{trade.amount}"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_amount"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="BTC_USD" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

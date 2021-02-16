@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
+import com.github.alvarosct02.criptocurrency.data.models.Trade
 
 interface CurrenciesRepository {
 
@@ -15,11 +16,15 @@ interface CurrenciesRepository {
 
     fun getOrdersByBook(book: String): LiveData<Resource<BookOrders>>
 
-    suspend fun refreshAllTickers(): List<Ticker>
+    fun getTradesByBook(book: String): LiveData<Resource<List<Trade>>>
 
-    suspend fun refreshTickerByBook(book: String): Ticker
+    suspend fun refreshAllTickers(): List<Ticker>?
 
-    suspend fun refreshTickerHistoryByBook(book: String): List<TickerHistory>
+    suspend fun refreshTickerByBook(book: String): Ticker?
 
-    suspend fun refreshOrdersByBook(book: String): BookOrders
+    suspend fun refreshTickerHistoryByBook(book: String): List<TickerHistory>?
+
+    suspend fun refreshOrdersByBook(book: String): BookOrders?
+
+    suspend fun refreshTradesByBook(book: String): List<Trade>?
 }

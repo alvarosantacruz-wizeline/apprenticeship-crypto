@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.alvarosct02.criptocurrency.data.models.BookOrder
-import com.github.alvarosct02.criptocurrency.databinding.ItemListOrderBinding
+import com.github.alvarosct02.criptocurrency.data.models.Trade
+import com.github.alvarosct02.criptocurrency.databinding.ItemListTradeBinding
 
 class OrderListAdapter(
     private val viewModel: CurrencyDetailViewModel
-) : ListAdapter<BookOrder, OrderListAdapter.ViewHolder>(BookOrderDiffCallback()) {
+) : ListAdapter<Trade, OrderListAdapter.ViewHolder>(BookOrderDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -21,31 +21,31 @@ class OrderListAdapter(
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder(private val binding: ItemListOrderBinding) :
+    class ViewHolder(private val binding: ItemListTradeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: CurrencyDetailViewModel, bookOrder: BookOrder) {
+        fun bind(viewModel: CurrencyDetailViewModel, trade: Trade) {
             binding.viewModel = viewModel
-            binding.bookOrder = bookOrder
+            binding.trade = trade
             binding.executePendingBindings()
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemListOrderBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemListTradeBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
     }
 }
 
-class BookOrderDiffCallback : DiffUtil.ItemCallback<BookOrder>() {
-    override fun areItemsTheSame(oldItem: BookOrder, newItem: BookOrder): Boolean {
-        return oldItem == newItem
+class BookOrderDiffCallback : DiffUtil.ItemCallback<Trade>() {
+    override fun areItemsTheSame(oldItem: Trade, newItem: Trade): Boolean {
+        return oldItem.tid == newItem.tid
     }
 
-    override fun areContentsTheSame(oldItem: BookOrder, newItem: BookOrder): Boolean {
+    override fun areContentsTheSame(oldItem: Trade, newItem: Trade): Boolean {
         return oldItem.toString() == newItem.toString()
     }
 }

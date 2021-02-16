@@ -16,6 +16,11 @@ class CurrencyListAdapter(
     private val viewLifecycleOwner: LifecycleOwner
 ) : ListAdapter<Ticker, CurrencyListAdapter.ViewHolder>(BookDiffCallback()) {
 
+    override fun submitList(list: MutableList<Ticker>?) {
+        list?.sortWith(compareByDescending<Ticker> { it.to }.thenBy { it.from })
+        super.submitList(list)
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(viewModel, item)

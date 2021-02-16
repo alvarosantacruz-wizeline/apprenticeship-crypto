@@ -9,6 +9,7 @@ import com.github.alvarosct02.criptocurrency.data.models.BookOrders
 import com.github.alvarosct02.criptocurrency.data.models.Ticker
 import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
 import com.github.alvarosct02.criptocurrency.data.models.TickerWithHistory
+import com.github.alvarosct02.criptocurrency.data.models.Trade
 import com.github.alvarosct02.criptocurrency.data.source.local.room.AppDatabase
 import java.util.Calendar
 
@@ -41,6 +42,7 @@ class CurrenciesRoomSource(
         appDatabase.tickerDao().insertAll(books)
     }
 
+    @WorkerThread
     override suspend fun saveAllTickersHistory(history: List<TickerHistory>) {
         appDatabase.tickerHistoryDao().insertAll(history)
     }
@@ -57,7 +59,9 @@ class CurrenciesRoomSource(
 
     override fun observeTickerHistoryByBook(book: String): LiveData<Resource<List<TickerHistory>>> {
         val time24HoursAgoInMillis = Calendar.getInstance().timeInMillis - 24 * 60 * 60 * 1000
-        return Transformations.map(appDatabase.tickerHistoryDao().observeById(book, time24HoursAgoInMillis.toString())) { result ->
+        return Transformations.map(
+            appDatabase.tickerHistoryDao().observeById(book, time24HoursAgoInMillis.toString())
+        ) { result ->
             if (result == null) {
                 Resource.Error(errorType = ErrorType.Unknown)
             } else {
@@ -84,5 +88,20 @@ class CurrenciesRoomSource(
     @WorkerThread
     override suspend fun saveBookOrders(bookOrders: BookOrders) {
         appDatabase.ordersDao().insert(bookOrders)
+    }
+
+    override fun observeTradesByBook(book: String): LiveData<Resource<List<Trade>>> {
+        return Transformations.map(appDatabase.tradeDao().observeById(book)) { result ->
+            if (result == null) {
+                Resource.Error(errorType = ErrorType.Unknown)
+            } else {
+                Resource.Success(result)
+            }
+        }
+    }
+
+    @WorkerThread
+    override suspend fun saveTrades(trades: List<Trade>) {
+        appDatabase.tradeDao().insertAll(trades)
     }
 }

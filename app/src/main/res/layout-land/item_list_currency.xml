@@ -7,8 +7,6 @@
 
         <import type="com.github.alvarosct02.criptocurrency.BindingUtils" />
 
-        <import type="androidx.core.content.ContextCompat" />
-
         <variable
             name="ticker"
             type="com.github.alvarosct02.criptocurrency.data.models.Ticker" />

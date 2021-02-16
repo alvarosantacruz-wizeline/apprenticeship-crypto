@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.github.alvarosct02.criptocurrency.Constants.REFRESH_TIME_IN_MILLIS
 import com.github.alvarosct02.criptocurrency.EventObserver
 import com.github.alvarosct02.criptocurrency.R
 import com.github.alvarosct02.criptocurrency.VerticalSpaceItemDecoration
@@ -23,7 +24,7 @@ class CurrencyListFragment : BaseFragment() {
     init {
         lifecycleScope.launchWhenStarted {
             while (true) {
-                delay(5000)
+                delay(REFRESH_TIME_IN_MILLIS)
                 viewModel.refreshAllTickers()
             }
         }

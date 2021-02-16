@@ -21,6 +21,9 @@ data class Ticker(
     @SerializedName("change_24") val change24: String = "",
 ) {
 
+    val from: String get() = book.split("_").getOrNull(0) ?: ""
+    val to: String get() = book.split("_").getOrNull(1) ?: ""
+
     @Ignore
     val lastPrice: BigDecimal = run {
         val lastDecimal = last.toBigDecimalOrNull() ?: BigDecimal.ZERO
@@ -42,10 +45,8 @@ data class Ticker(
     }
 
     @Ignore
-    val avgPrice: String = run {
-        val askDecimal = ask.toBigDecimalOrNull() ?: BigDecimal.ZERO
+    val buyPrice: String = run {
         val bidDecimal = bid.toBigDecimalOrNull() ?: BigDecimal.ZERO
-        val result = (askDecimal.plus(bidDecimal)).divide(BigDecimal(2))
-        result.toString()
+        bidDecimal.toString()
     }
 }
