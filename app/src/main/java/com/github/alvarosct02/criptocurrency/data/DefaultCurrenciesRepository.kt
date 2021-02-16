@@ -7,6 +7,7 @@ import com.github.alvarosct02.criptocurrency.data.models.TickerHistory
 import com.github.alvarosct02.criptocurrency.data.models.Trade
 import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSource
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteSource
+import kotlinx.coroutines.delay
 
 class DefaultCurrenciesRepository(
     private val remote: CurrenciesRemoteSource,
@@ -15,6 +16,7 @@ class DefaultCurrenciesRepository(
 
     override fun getAllTickers() = liveData<Resource<List<Ticker>>> {
         emit(Resource.Loading())
+        delay(200)
         emitSource(local.observeAllTickers())
         try {
             refreshAllTickers()
@@ -36,6 +38,7 @@ class DefaultCurrenciesRepository(
 
     override fun getTickerByBook(book: String) = liveData<Resource<Ticker>> {
         emit(Resource.Loading())
+        delay(200)
         emitSource(local.observeTickerByBook(book))
         try {
             refreshTickerByBook(book)
@@ -56,6 +59,7 @@ class DefaultCurrenciesRepository(
 
     override fun getTradesByBook(book: String) = liveData<Resource<List<Trade>>> {
         emit(Resource.Loading())
+        delay(200)
         emitSource(local.observeTradesByBook(book))
         try {
             refreshTradesByBook(book)

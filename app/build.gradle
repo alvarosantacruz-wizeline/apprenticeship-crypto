@@ -23,7 +23,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "com.github.alvarosct02.com.github.alvarosct02.criptocurrency.TestRunner"
+        testInstrumentationRunner "com.github.alvarosct02.criptocurrency.CustomTestRunner"
 
         buildConfigField "String", "BASE_BITSO_URL", "\"https://api.bitso.com/v3/\""
         buildConfigField "String", "DATABASE_NAME", "\"criptocurreny.db\""
@@ -127,6 +127,7 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$dexMakerVersion"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.0.0"
 
     // AndroidX Test - JVM testing
     testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"

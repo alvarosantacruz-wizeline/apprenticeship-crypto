@@ -1,6 +1,7 @@
 package com.github.alvarosct02.criptocurrency.ui.currencyDetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,13 +47,14 @@ class CurrencyDetailFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupListAdapters()
 
-        val bookId = args.bookId
-        viewModel.setBook(bookId)
+        viewModel.ticker.observe(binding.lifecycleOwner!!) { uiState ->
+            Log.e("ASCT ticker", uiState.isLoading.toString())
+        }
 
         viewModel.tickerHistory.observe(binding.lifecycleOwner!!) { uiState ->
             val ticker = viewModel.ticker.value?.data ?: return@observe
@@ -60,6 +62,9 @@ class CurrencyDetailFragment : BaseFragment() {
             binding.chart.isVisible = true
             binding.chart.setTickerDataInteractive(uiState, color)
         }
+
+        val bookId = args.bookId
+        viewModel.setBook(bookId)
     }
 
     private fun setupListAdapters() {

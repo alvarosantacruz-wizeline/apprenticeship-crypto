@@ -17,7 +17,7 @@
             android:id="@+id/pb_currencies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:isVisible="@{viewModel.items.loading}"
+            app:isVisible="@{viewModel.items.loading != false}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
             android:id="@+id/rv_currencies"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:isVisible="@{!viewModel.items.loading}"
+            app:isVisible="@{viewModel.items.loading != true}"
             app:items="@{viewModel.items.data}"
             tools:listitem="@layout/item_list_currency"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

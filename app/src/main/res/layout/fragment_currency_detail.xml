@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/size_large"
-                app:isVisible="@{viewModel.ticker.loading}"
+                app:isVisible="@{viewModel.ticker.loading != false}"
                 tools:visibility="gone" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/size_large"
-                app:isVisible="@{!viewModel.ticker.loading}">
+                app:isVisible="@{viewModel.ticker.loading != true}">
 
                 <ImageView
                     android:id="@+id/icon"
@@ -122,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/size_large"
-                app:isVisible="@{viewModel.trades.loading}"
+                app:isVisible="@{viewModel.trades.loading != false}"
                 tools:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -130,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                app:isVisible="@{!viewModel.trades.loading}"
+                app:isVisible="@{viewModel.trades.loading != true}"
                 app:items="@{viewModel.trades.data}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_list_trade" />

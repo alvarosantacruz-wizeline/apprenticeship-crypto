@@ -1,5 +1,7 @@
 package com.github.alvarosct02.criptocurrency.di
 
+import android.content.Context
+import com.github.alvarosct02.criptocurrency.BuildConfig
 import com.github.alvarosct02.criptocurrency.data.CurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.DefaultCurrenciesRepository
 import com.github.alvarosct02.criptocurrency.data.source.local.CurrenciesLocalSource
@@ -8,15 +10,28 @@ import com.github.alvarosct02.criptocurrency.data.source.local.room.AppDatabase
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRemoteSource
 import com.github.alvarosct02.criptocurrency.data.source.remote.CurrenciesRetrofitSource
 import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.CurrenciesService
+import com.github.alvarosct02.criptocurrency.data.source.remote.retrofit.RetrofitApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataModule {
+object AppModule {
+
+    @Provides
+    fun provideRetrofitClient(): Retrofit {
+        return RetrofitApiClient(BuildConfig.BASE_BITSO_URL).getRetrofitClient()
+    }
+
+    @Provides
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        AppDatabase.init(appContext)
+        return AppDatabase.getInstance()
+    }
 
     @Provides
     fun provideCurrenciesService(retrofit: Retrofit): CurrenciesService {
@@ -37,6 +52,11 @@ object DataModule {
     fun provideCurrenciesRemoteSource(currenciesService: CurrenciesService): CurrenciesRemoteSource {
         return CurrenciesRetrofitSource(service = currenciesService)
     }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object RepositoryModule {
 
     @Provides
     fun provideCurrenciesRepository(
